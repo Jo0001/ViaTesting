@@ -1,0 +1,20 @@
+BorderPane {
+    -fx-background-color: #4f4f4f;
+}
+
+Label, CheckBox {
+    -fx-text-fill: white;
+}
+
+ChoiceBox {
+    -fx-background-color: #939393;
+}
+
+Button {
+    -fx-background-color: #d2d2d2;
+    -fx-cursor: hand;
+}
+
+Button:hover, CheckBox:hover {
+    -fx-background-color: #9a9a9a;
+}
