@@ -1,9 +1,6 @@
 package main.java.de.jo0001.viaTesting.util;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import main.java.de.jo0001.viaTesting.core.Main;
 
 import java.io.BufferedReader;
@@ -27,6 +24,10 @@ public class DownloadUtil {
     public static String getLatestWaterfallMCVersion() throws IOException {
         JsonArray versions = fetchData("https://papermc.io/api/v2/projects/waterfall").getAsJsonArray("versions");
         return versions.get(versions.size() - 1).getAsString();
+    }
+
+    public static String getLatestViaFileUrl(String project) throws IOException {
+        return "https://ci.viaversion.com/job/" + project + "/lastSuccessfulBuild/artifact/" + fetchData("https://ci.viaversion.com/job/" + project + "/lastSuccessfulBuild/api/json?tree=artifacts[relativePath]").getAsJsonArray("artifacts").get(0).getAsJsonObject().get("relativePath").getAsString();
     }
 
     private static JsonObject fetchData(String url) throws IOException {

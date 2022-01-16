@@ -86,14 +86,14 @@ public class Downloader extends Thread {
 
     private void downloadVia() throws IOException {
         if (type.equalsIgnoreCase("#links")) {
-            downloadFile("https://ci.viaversion.com/job/ViaVersion/lastSuccessfulBuild/artifact/build/libs/ViaVersion-4.1.2-SNAPSHOT.jar");
+            downloadFile(DownloadUtil.getLatestViaFileUrl("ViaVersion"));
             if (isViaBackwards) {
-                downloadFile("https://ci.viaversion.com/view/ViaBackwards/job/ViaBackwards/lastSuccessfulBuild/artifact/build/libs/ViaBackwards-4.1.2-SNAPSHOT.jar");
+                downloadFile(DownloadUtil.getLatestViaFileUrl("ViaBackwards"));
             }
             if (isViaRewind) {
-                downloadFile("https://ci.viaversion.com/view/ViaRewind/job/ViaRewind/lastSuccessfulBuild/artifact/all/target/ViaRewind-2.0.3-SNAPSHOT.jar");
+                downloadFile(DownloadUtil.getLatestViaFileUrl("ViaRewind"));
                 if (isViaRewindLegacySupport) {
-                    downloadFile("https://ci.viaversion.com/view/All/job/ViaRewind%20Legacy%20Support/lastSuccessfulBuild/artifact/target/viarewind-legacy-support-1.4.1.jar");
+                    downloadFile(DownloadUtil.getLatestViaFileUrl("ViaRewind%20Legacy%20Support"));
                 }
             }
         } else {
