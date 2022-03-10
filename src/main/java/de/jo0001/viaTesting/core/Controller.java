@@ -1,6 +1,9 @@
 package main.java.de.jo0001.viaTesting.core;
 
+import com.google.gson.JsonArray;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -11,6 +14,8 @@ import main.java.de.jo0001.viaTesting.util.Util;
 
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -33,9 +38,19 @@ public class Controller implements Initializable {
     }
 
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            ObservableList<String> list = FXCollections.observableArrayList();
+            DownloadUtil.getVersions().forEach(jsonElement -> list.add(jsonElement.getAsString()));
+            Collections.reverse(list);
+            choiceBox.setItems(list);
+            choiceBox.setValue(list.get(0));
+        } catch (IOException e) {
+            e.printStackTrace();
+            Util.alert(e.toString());
+        }
+
         //todo check vR when vRSup is checked
         vR.setOnAction(actionEvent -> {
             if (!vR.isSelected() && vRSup.isSelected()) {
