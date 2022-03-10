@@ -14,36 +14,6 @@
             <children>
                 <Label layoutX="20.0" layoutY="34.0" text="Server version (Paper)"/>
                 <ChoiceBox fx:id="choiceBox" layoutX="198.0" layoutY="30.0" prefWidth="150.0" value="1.17">
-                    <items>
-                        <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="1.18.1"/>
-                            <String fx:value="1.17.1"/>
-                            <String fx:value="1.17"/>
-                            <String fx:value="1.16.5"/>
-                            <String fx:value="1.16.4"/>
-                            <String fx:value="1.16.3"/>
-                            <String fx:value="1.16.2"/>
-                            <String fx:value="1.16.1"/>
-                            <String fx:value="1.15.2"/>
-                            <String fx:value="1.15.1"/>
-                            <String fx:value="1.15"/>
-                            <String fx:value="1.14.4"/>
-                            <String fx:value="1.14.3"/>
-                            <String fx:value="1.14.2"/>
-                            <String fx:value="1.14.1"/>
-                            <String fx:value="1.14"/>
-                            <String fx:value="1.13.2"/>
-                            <String fx:value="1.13.1"/>
-                            <String fx:value="1.13"/>
-                            <String fx:value="1.12.2"/>
-                            <String fx:value="1.12.1"/>
-                            <String fx:value="1.12"/>
-                            <String fx:value="1.11.2"/>
-                            <String fx:value="1.10.2"/>
-                            <String fx:value="1.9.4"/>
-                            <String fx:value="1.8.8"/>
-                        </FXCollections>
-                    </items>
                 </ChoiceBox>
                 <Label layoutX="20.0" layoutY="72.0" prefHeight="17.0" prefWidth="50.0" text="Proxy"/>
                 <ChoiceBox layoutX="198.0" layoutY="68.0" prefWidth="150.0" value="None" fx:id="proxyCB">

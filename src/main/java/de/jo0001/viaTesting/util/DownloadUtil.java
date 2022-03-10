@@ -30,6 +30,10 @@ public class DownloadUtil {
         return "https://ci.viaversion.com/job/" + project + "/lastSuccessfulBuild/artifact/" + fetchData("https://ci.viaversion.com/job/" + project + "/lastSuccessfulBuild/api/json?tree=artifacts[relativePath]").getAsJsonArray("artifacts").get(0).getAsJsonObject().get("relativePath").getAsString();
     }
 
+    public static JsonArray getVersions() throws IOException {
+        return fetchData("https://papermc.io/api/v2/projects/paper").getAsJsonArray("versions");
+    }
+
     private static JsonObject fetchData(String url) throws IOException {
         //stolen from Eduard
         final HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
