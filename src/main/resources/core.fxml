@@ -13,7 +13,7 @@
         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
                 <Label layoutX="20.0" layoutY="34.0" text="Server version (Paper)"/>
-                <ChoiceBox fx:id="choiceBox" layoutX="198.0" layoutY="30.0" prefWidth="150.0" value="1.17">
+                <ChoiceBox fx:id="versionCB" layoutX="198.0" layoutY="30.0" prefWidth="150.0" value="1.17">
                 </ChoiceBox>
                 <Label layoutX="20.0" layoutY="72.0" prefHeight="17.0" prefWidth="50.0" text="Proxy"/>
                 <ChoiceBox layoutX="198.0" layoutY="68.0" prefWidth="150.0" value="None" fx:id="proxyCB">
@@ -25,13 +25,13 @@
                         </FXCollections>
                     </items>
                 </ChoiceBox>
-                <Label layoutX="21.0" layoutY="118.0" text="Add-Ons"/>
+                <Label layoutX="20.0" layoutY="118.0" text="Add-Ons"/>
                 <CheckBox fx:id="vB" layoutX="107.0" layoutY="118.0" mnemonicParsing="false" text="ViaBackwards"/>
                 <CheckBox fx:id="vR" layoutX="236.0" layoutY="118.0" mnemonicParsing="false" text="ViaRewind"/>
                 <CheckBox fx:id="vRSup" layoutX="349.0" layoutY="118.0" mnemonicParsing="false"
                           text="ViaRewind Legacy Support"/>
                 <Button fx:id="btn" layoutX="268.0" layoutY="349.0" mnemonicParsing="false" text="Create"/>
-                <Label layoutX="21.0" layoutY="179.0" text="Type"/>
+                <Label layoutX="20.0" layoutY="179.0" text="Type"/>
                 <ChoiceBox fx:id="typeCB" layoutX="200.0" layoutY="175.0" prefWidth="150.0" value="#links">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
@@ -40,9 +40,21 @@
                         </FXCollections>
                     </items>
                 </ChoiceBox>
-                <Label layoutX="20.0" layoutY="261.0" text="Testing Setups in work"/>
-                <Label fx:id="inWorkNumber" layoutX="154.0" layoutY="261.0"/>
-                <ProgressBar fx:id="inWorkProgress" layoutX="186.0" layoutY="261.0" prefWidth="200.0" progress="0.0"/>
+                <Label layoutX="20.0" layoutY="221.0" text="Java Version"/>
+                <ChoiceBox fx:id="javaCB" layoutX="200.0" layoutY="221.0" prefWidth="150.0" value="System">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="System"/>
+                            <String fx:value="Java 18"/>
+                            <String fx:value="Java 17"/>
+                            <String fx:value="Java 11"/>
+                            <String fx:value="Java 8"/>
+                        </FXCollections>
+                    </items>
+                </ChoiceBox>
+                <Label layoutX="20.0" layoutY="271.0" text="Testing Setups in work"/>
+                <Label fx:id="inWorkNumber" layoutX="154.0" layoutY="271.0"/>
+                <ProgressBar fx:id="inWorkProgress" layoutX="186.0" layoutY="271.0" prefWidth="200.0" progress="0.0"/>
             </children>
         </AnchorPane>
     </center>

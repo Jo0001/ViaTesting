@@ -1,26 +1,23 @@
 package main.java.de.jo0001.viaTesting.core;
 
-import com.google.gson.JsonArray;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 import main.java.de.jo0001.viaTesting.util.AssetUtil;
 import main.java.de.jo0001.viaTesting.util.DownloadUtil;
 import main.java.de.jo0001.viaTesting.util.Util;
 
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     @FXML
-    ChoiceBox typeCB, choiceBox, proxyCB;
+    ChoiceBox typeCB, versionCB, proxyCB, javaCB;
     @FXML
     CheckBox vB, vR, vRSup;
     @FXML
@@ -44,8 +41,8 @@ public class Controller implements Initializable {
             ObservableList<String> list = FXCollections.observableArrayList();
             DownloadUtil.getVersions().forEach(jsonElement -> list.add(jsonElement.getAsString()));
             Collections.reverse(list);
-            choiceBox.setItems(list);
-            choiceBox.setValue(list.get(0));
+            versionCB.setItems(list);
+            versionCB.setValue(list.get(0));
         } catch (IOException e) {
             e.printStackTrace();
             Util.alert(e.toString());
@@ -99,8 +96,9 @@ public class Controller implements Initializable {
 
             String proxySettings = proxyCB.getValue().toString();
             boolean withProxy = !proxySettings.equalsIgnoreCase("None");
-            String version = choiceBox.getValue().toString();
+            String version = versionCB.getValue().toString();
             String type = typeCB.getValue().toString();
+            String java = javaCB.getValue().toString();
 
             //load the default server assets
             String serverAssets = withProxy ? "paperProxy" : "paper";
@@ -109,17 +107,17 @@ public class Controller implements Initializable {
                 File splitDir = new File(dir.getAbsolutePath() + "/Paper-Server");
                 splitDir.mkdir();
                 AssetUtil.loadServerAssets(serverAssets, splitDir);
-                AssetUtil.createStartBat("paper-" + version, splitDir);
+                AssetUtil.createStartBat("paper-" + version, java,splitDir);
                 pluginsDir = new File(splitDir.getPath() + "/plugins");
                 pluginsDir.mkdir();
                 splitDir = new File(dir.getAbsolutePath() + "/Waterfall-Server");
                 splitDir.mkdir();
                 pluginsDir = new File(splitDir.getPath() + "/plugins");
                 AssetUtil.loadServerAssets("waterfall", splitDir);
-                AssetUtil.createStartBat("waterfall-latest", splitDir);
+                AssetUtil.createStartBat("waterfall-latest",java, splitDir);
             } else {
                 AssetUtil.loadServerAssets(serverAssets, dir);
-                AssetUtil.createStartBat("paper-" + version, dir);
+                AssetUtil.createStartBat("paper-" + version,java, dir);
                 pluginsDir = new File(dir.getPath() + "/plugins");
             }
             pluginsDir.mkdir();

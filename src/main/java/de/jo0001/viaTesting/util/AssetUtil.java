@@ -61,12 +61,21 @@ public class AssetUtil {
      * Creates a start.bat
      *
      * @param name jar name
+     * @param java Java version
      * @param dir  target directory
      */
-    public static void createStartBat(String name, File dir) throws IOException {
+    public static void createStartBat(String name, String java, File dir) throws IOException {
         FileOutputStream fos = new FileOutputStream(new File(dir, "start.bat"));
-        String start = "@echo off\ntitle " + dir.getName() + "\necho Starting ViaTesting server\n java -jar " + name + ".jar nogui\npause";
+        String start = "@echo off\ntitle " + dir.getName() + "\necho Starting ViaTesting server\n " + getJava(java) + " -jar " + name + ".jar nogui\npause";
         fos.write(start.getBytes(StandardCharsets.UTF_8));
         fos.close();
+    }
+
+    private static String getJava(String java) {
+        if (java.equalsIgnoreCase("System")) {
+            return "java";
+        } else {
+            return System.getProperty("user.dir") + "\\java-" + java.split("Java ")[1] + "\\bin\\java.exe";
+        }
     }
 }
