@@ -34,7 +34,7 @@ public class AssetUtil {
 
     public static void loadServerAssets(String asset, File dir) {
         String[] paperBase = {"banned-ips.json", "banned-players.json", "bukkit.yml", "commands.yml", "eula.txt", "ops.json", "paper.yml", "permissions.yml", "server.properties", "server-icon.png", "whitelist.json"};
-        String[] paperWaterfall = {"paper.yml", "server.properties"};
+        String[] paperWaterfall = {"spigot.yml", "server.properties"};
         String[] waterfall = {"config.yml", "server-icon.png", "waterfall.yml"};
 
         if (asset.equals("paperProxy")) {
