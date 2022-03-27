@@ -26,7 +26,10 @@ public class DownloadUtil {
         return versions.get(versions.size() - 1).getAsString();
     }
 
-    public static String getLatestViaFileUrl(String project) throws IOException {
+    public static String getLatestViaFileUrl(String project, String type) throws IOException {
+        if (type.equalsIgnoreCase("dev") && !project.equalsIgnoreCase("ViaRewind%20Legacy%20Support")) {
+            project = project + "-DEV";
+        }
         return "https://ci.viaversion.com/job/" + project + "/lastSuccessfulBuild/artifact/" + fetchData("https://ci.viaversion.com/job/" + project + "/lastSuccessfulBuild/api/json?tree=artifacts[relativePath]").getAsJsonArray("artifacts").get(0).getAsJsonObject().get("relativePath").getAsString();
     }
 

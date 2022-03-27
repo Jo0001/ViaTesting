@@ -37,6 +37,7 @@
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="Release"/>
                             <String fx:value="#links"/>
+                            <String fx:value="dev"/>
                         </FXCollections>
                     </items>
                 </ChoiceBox>

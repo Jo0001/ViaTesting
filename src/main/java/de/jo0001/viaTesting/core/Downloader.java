@@ -85,18 +85,7 @@ public class Downloader extends Thread {
     }
 
     private void downloadVia() throws IOException {
-        if (type.equalsIgnoreCase("#links")) {
-            downloadFile(DownloadUtil.getLatestViaFileUrl("ViaVersion"));
-            if (isViaBackwards) {
-                downloadFile(DownloadUtil.getLatestViaFileUrl("ViaBackwards"));
-            }
-            if (isViaRewind) {
-                downloadFile(DownloadUtil.getLatestViaFileUrl("ViaRewind"));
-                if (isViaRewindLegacySupport) {
-                    downloadFile(DownloadUtil.getLatestViaFileUrl("ViaRewind%20Legacy%20Support"));
-                }
-            }
-        } else {
+        if (type.equalsIgnoreCase("Release")) {
             downloadFile(new URL("https://api.spiget.org/v2/resources/19254/download"), "/plugins/ViaVersion-release.jar");
             if (isViaBackwards) {
                 downloadFile(new URL("https://api.spiget.org/v2/resources/27448/download"), "/plugins/ViaBackwards-release.jar");
@@ -107,8 +96,18 @@ public class Downloader extends Thread {
                     downloadFile(new URL("https://api.spiget.org/v2/resources/52924/download"), "/plugins/ViaRewindLegacySupport-release.jar");
                 }
             }
+        } else {
+            downloadFile(DownloadUtil.getLatestViaFileUrl("ViaVersion",type));
+            if (isViaBackwards) {
+                downloadFile(DownloadUtil.getLatestViaFileUrl("ViaBackwards",type));
+            }
+            if (isViaRewind) {
+                downloadFile(DownloadUtil.getLatestViaFileUrl("ViaRewind",type));
+                if (isViaRewindLegacySupport) {
+                    downloadFile(DownloadUtil.getLatestViaFileUrl("ViaRewind%20Legacy%20Support",type));
+                }
+            }
         }
-
     }
 
     private void downloadFile(String url) throws IOException {
