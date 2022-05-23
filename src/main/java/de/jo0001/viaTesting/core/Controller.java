@@ -37,16 +37,18 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
+        Platform.runLater(() -> {
             ObservableList<String> list = FXCollections.observableArrayList();
-            DownloadUtil.getVersions().forEach(jsonElement -> list.add(jsonElement.getAsString()));
+            try {
+                DownloadUtil.getVersions().forEach(jsonElement -> list.add(jsonElement.getAsString()));
+            } catch (IOException e) {
+                e.printStackTrace();
+                Util.alert(e.toString());
+            }
             Collections.reverse(list);
             versionCB.setItems(list);
             versionCB.setValue(list.get(0));
-        } catch (IOException e) {
-            e.printStackTrace();
-            Util.alert(e.toString());
-        }
+        });
 
         //todo check vR when vRSup is checked
         vR.setOnAction(actionEvent -> {
@@ -107,17 +109,17 @@ public class Controller implements Initializable {
                 File splitDir = new File(dir.getAbsolutePath() + "/Paper-Server");
                 splitDir.mkdir();
                 AssetUtil.loadServerAssets(serverAssets, splitDir);
-                AssetUtil.createStartBat("paper-" + version, java,splitDir);
+                AssetUtil.createStartBat("paper-" + version, java, splitDir);
                 pluginsDir = new File(splitDir.getPath() + "/plugins");
                 pluginsDir.mkdir();
                 splitDir = new File(dir.getAbsolutePath() + "/Waterfall-Server");
                 splitDir.mkdir();
                 pluginsDir = new File(splitDir.getPath() + "/plugins");
                 AssetUtil.loadServerAssets("waterfall", splitDir);
-                AssetUtil.createStartBat("waterfall-latest",java, splitDir);
+                AssetUtil.createStartBat("waterfall-latest", java, splitDir);
             } else {
                 AssetUtil.loadServerAssets(serverAssets, dir);
-                AssetUtil.createStartBat("paper-" + version,java, dir);
+                AssetUtil.createStartBat("paper-" + version, java, dir);
                 pluginsDir = new File(dir.getPath() + "/plugins");
             }
             pluginsDir.mkdir();
