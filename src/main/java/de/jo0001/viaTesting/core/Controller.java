@@ -55,7 +55,12 @@ public class Controller implements Initializable {
         javaCB.setItems(items);
         javaCB.setValue(value);
 
-        //todo check vR when vRSup is checked
+
+        vRSup.setOnAction(actionEvent -> {
+            if (vRSup.isSelected()) {
+                vR.setSelected(true);
+            }
+        });
         vR.setOnAction(actionEvent -> {
             if (!vR.isSelected() && vRSup.isSelected()) {
                 vRSup.setSelected(false);
@@ -64,9 +69,12 @@ public class Controller implements Initializable {
         proxyCB.setOnAction(actionEvent -> {
             if (proxyCB.getValue().toString().equalsIgnoreCase("Waterfall with Via")) {
                 vRSup.setSelected(false);
+                vRSup.setDisable(true);
+            } else {
+                vRSup.setDisable(false);
             }
         });
-        //todo cancel vRSup check event when  "Waterfall with Via" is selected
+
         btn.setOnAction(actionEvent -> {
             try {
                 create();
