@@ -1,13 +1,11 @@
 package main.java.de.jo0001.viaTesting.util;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Properties;
 import java.util.Random;
 
 public class AssetUtil {
@@ -33,17 +31,41 @@ public class AssetUtil {
     }
 
     public static void loadServerAssets(String asset, File dir) {
+        loadServerAssets(asset, false, dir);
+    }
+
+    public static void loadServerAssets(String asset, boolean nether, File dir) {
         String[] paperBase = {"banned-ips.json", "banned-players.json", "bukkit.yml", "commands.yml", "eula.txt", "ops.json", "paper.yml", "permissions.yml", "server.properties", "server-icon.png", "whitelist.json"};
-        String[] paperWaterfall = {"spigot.yml", "server.properties"};
+        String[] paperWaterfall = {"spigot.yml"};
         String[] waterfall = {"config.yml", "server-icon.png", "waterfall.yml"};
 
-        if (asset.equals("paperProxy")) {
+        if (asset.startsWith("paper")) {
             copyFiles(paperBase, "paper", dir);
-            copyFiles(paperWaterfall, "paper-waterfall", dir);
+            if (nether) {
+                changeProperties(dir, "allow-nether", "true");
+            }
+            if (asset.equals("paperProxy")) {
+                copyFiles(paperWaterfall, "paper-waterfall", dir);
+                changeProperties(dir, "online-mode", "false");
+            }
         } else if (asset.equalsIgnoreCase("waterfall")) {
             copyFiles(waterfall, "waterfall", dir);
-        } else {
-            copyFiles(paperBase, "paper", dir);
+        }
+    }
+
+    private static void changeProperties(File file, String property, String value) {
+        file = new File(file + "/server.properties");
+        try {
+            FileInputStream input = new FileInputStream(file);
+            Properties prop = new Properties();
+            prop.load(input);
+            input.close();
+            FileOutputStream output = new FileOutputStream(file);
+            prop.replace(property, value);
+            prop.store(output, null);
+            output.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

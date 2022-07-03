@@ -19,7 +19,7 @@ public class Controller implements Initializable {
     @FXML
     ChoiceBox typeCB, versionCB, proxyCB, javaCB;
     @FXML
-    CheckBox vB, vR, vRSup;
+    CheckBox vB, vR, vRSup, aNether;
     @FXML
     Button btn;
     @FXML
@@ -101,6 +101,7 @@ public class Controller implements Initializable {
             String version = versionCB.getValue().toString();
             String type = typeCB.getValue().toString();
             String java = javaCB.getValue().toString();
+            boolean allowNether = aNether.isSelected();
 
             //load the default server assets
             String serverAssets = withProxy ? "paperProxy" : "paper";
@@ -108,7 +109,7 @@ public class Controller implements Initializable {
             if (withProxy) {
                 File splitDir = new File(dir.getAbsolutePath() + "/Paper-Server");
                 splitDir.mkdir();
-                AssetUtil.loadServerAssets(serverAssets, splitDir);
+                AssetUtil.loadServerAssets(serverAssets, allowNether,splitDir);
                 AssetUtil.createStartBat("paper-" + version, java, splitDir);
                 pluginsDir = new File(splitDir.getPath() + "/plugins");
                 pluginsDir.mkdir();
@@ -118,7 +119,7 @@ public class Controller implements Initializable {
                 AssetUtil.loadServerAssets("waterfall", splitDir);
                 AssetUtil.createStartBat("waterfall-latest", java, splitDir);
             } else {
-                AssetUtil.loadServerAssets(serverAssets, dir);
+                AssetUtil.loadServerAssets(serverAssets,allowNether, dir);
                 AssetUtil.createStartBat("paper-" + version, java, dir);
                 pluginsDir = new File(dir.getPath() + "/plugins");
             }
