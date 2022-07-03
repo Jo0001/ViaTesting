@@ -49,6 +49,11 @@ public class Controller implements Initializable {
             versionCB.setItems(list);
             versionCB.setValue(list.get(0));
         });
+        ObservableList items = javaCB.getItems();
+        String value = "System (" + System.getProperty("java.version") + ")";
+        items.add(0, value);
+        javaCB.setItems(items);
+        javaCB.setValue(value);
 
         //todo check vR when vRSup is checked
         vR.setOnAction(actionEvent -> {
@@ -109,7 +114,7 @@ public class Controller implements Initializable {
             if (withProxy) {
                 File splitDir = new File(dir.getAbsolutePath() + "/Paper-Server");
                 splitDir.mkdir();
-                AssetUtil.loadServerAssets(serverAssets, allowNether,splitDir);
+                AssetUtil.loadServerAssets(serverAssets, allowNether, splitDir);
                 AssetUtil.createStartBat("paper-" + version, java, splitDir);
                 pluginsDir = new File(splitDir.getPath() + "/plugins");
                 pluginsDir.mkdir();
@@ -119,7 +124,7 @@ public class Controller implements Initializable {
                 AssetUtil.loadServerAssets("waterfall", splitDir);
                 AssetUtil.createStartBat("waterfall-latest", java, splitDir);
             } else {
-                AssetUtil.loadServerAssets(serverAssets,allowNether, dir);
+                AssetUtil.loadServerAssets(serverAssets, allowNether, dir);
                 AssetUtil.createStartBat("paper-" + version, java, dir);
                 pluginsDir = new File(dir.getPath() + "/plugins");
             }
