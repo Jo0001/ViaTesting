@@ -17,11 +17,11 @@ public class AssetUtil {
     public static File getDir() {
         final String[] NAMES_1 = {"funny", "silver", "turbo", "glowing", "musical", "fluffy", "super", "friendly",
                 "fictional", "automatic", "rotary", "upgraded", "reimagined", "fantastic", "ubiquitous", "redesigned",
-                "special", "miniature", "cautious", "urban", "bookish", "refactored", "animated", "shiny", "symmetrical"};
+                "special", "miniature", "cautious", "urban", "bookish", "refactored", "animated", "shiny", "symmetrical","upsidedown"};
         final String[] NAMES_2 = {"chicken", "cow", "mooshroom", "pig", "sheep", "squid", "villager", "wandering_trader", "bat",
                 "ocelot", "cat", "horse", "donkey", "mule", "skeleton_horse", "strider", "fox", "rabbit", "parrot", "turtle", "cod",
                 "salmon", "pufferfish", "tropical_fish", "enderman", "piglin", "zombified_piglin", "dolphin", "bee", "wolf",
-                "spider", "cave_spider", "polar_bear", "llama", "iron_golem", "panda"};
+                "spider", "cave_spider", "polar_bear", "llama", "iron_golem", "panda","warden","allay","slime","vex","stray","vindicator","witch"};
         Random random = new Random();
         File dir = new File("ViaTesting-" + NAMES_1[random.nextInt(NAMES_1.length)] + "-" + NAMES_2[random.nextInt(NAMES_2.length)]);
         if (dir.exists()) {
