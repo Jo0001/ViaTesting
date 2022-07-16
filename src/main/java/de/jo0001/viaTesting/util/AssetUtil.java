@@ -47,6 +47,7 @@ public class AssetUtil {
             if (asset.equals("paperProxy")) {
                 copyFiles(paperWaterfall, "paper-waterfall", dir);
                 changeProperties(dir, "online-mode", "false");
+                changeProperties(dir, "server-port", "25566");
             }
         } else if (asset.equalsIgnoreCase("waterfall")) {
             copyFiles(waterfall, "waterfall", dir);
@@ -94,7 +95,7 @@ public class AssetUtil {
     }
 
     private static String getJava(String java) {
-        if (java.equalsIgnoreCase("System")) {
+        if (java.startsWith("System")) {
             return "java";
         } else {
             return System.getProperty("user.dir") + "\\java-" + java.split("Java ")[1] + "\\bin\\java.exe";
