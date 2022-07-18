@@ -1,5 +1,11 @@
 BorderPane {
     -fx-background-color: #4f4f4f;
+    -fx-background-image: url("background.jpg");
+    -fx-background-size: 600 400;
+    -fx-background-position: center center;
+}
+AnchorPane {
+    -fx-background-color: rgba(77, 77, 77, 0.74);
 }
 
 Label, CheckBox {
