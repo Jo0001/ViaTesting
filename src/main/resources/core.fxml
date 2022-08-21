@@ -6,54 +6,57 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.collections.FXCollections?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.de.jo0001.viaTesting.core.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="main.java.de.jo0001.viaTesting.core.Controller">
     <center>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="20.0" layoutY="34.0" text="Server version (Paper)" />
-                <ChoiceBox fx:id="versionCB" layoutX="198.0" layoutY="30.0" prefWidth="150.0" value="1.17">
+                <Label layoutX="20.0" layoutY="34.0" text="Server version (Paper)"/>
+                <ChoiceBox fx:id="versionCB" layoutX="165.0" layoutY="30.0" prefWidth="150.0" value="1.17">
                 </ChoiceBox>
-                <Label layoutX="20.0" layoutY="72.0" prefHeight="17.0" prefWidth="50.0" text="Proxy" />
-                <ChoiceBox fx:id="proxyCB" layoutX="198.0" layoutY="68.0" prefWidth="150.0" value="None">
+                <Label layoutX="20.0" layoutY="74.0" prefHeight="17.0" prefWidth="50.0" text="Proxy"/>
+                <ChoiceBox fx:id="proxyCB" layoutX="165.0" layoutY="74.0" prefWidth="150.0" value="None">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="None" />
-                            <String fx:value="Waterfall" />
-                            <String fx:value="Waterfall with Via" />
+                            <String fx:value="None"/>
+                            <String fx:value="Waterfall"/>
+                            <String fx:value="Waterfall with Via"/>
                         </FXCollections>
                     </items>
                 </ChoiceBox>
-                <Label layoutX="20.0" layoutY="118.0" text="Add-Ons" />
-                <CheckBox fx:id="vB" layoutX="107.0" layoutY="118.0" mnemonicParsing="false" text="ViaBackwards" />
-                <CheckBox fx:id="vR" layoutX="236.0" layoutY="118.0" mnemonicParsing="false" text="ViaRewind" />
-                <CheckBox fx:id="vRSup" layoutX="349.0" layoutY="118.0" mnemonicParsing="false" text="ViaRewind Legacy Support" />
-                <Button fx:id="btn" layoutX="268.0" layoutY="349.0" mnemonicParsing="false" text="Create" />
-                <Label layoutX="20.0" layoutY="179.0" text="Type" />
-                <ChoiceBox fx:id="typeCB" layoutX="200.0" layoutY="175.0" prefWidth="150.0" value="#links">
+                <Label layoutX="20.0" layoutY="114.0" text="Add-Ons"/>
+                <CheckBox fx:id="vB" layoutX="165.0" layoutY="114.0" mnemonicParsing="false" text="ViaBackwards"/>
+                <CheckBox fx:id="vR" layoutX="275.0" layoutY="114.0" mnemonicParsing="false" text="ViaRewind"/>
+                <CheckBox fx:id="vRSup" layoutX="367.0" layoutY="114.0" mnemonicParsing="false"
+                          text="ViaRewind Legacy Support"/>
+                <Label layoutX="20.0" layoutY="154.0" text="Type"/>
+                <ChoiceBox fx:id="typeCB" layoutX="165.0" layoutY="154.0" prefWidth="150.0" value="#links">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="Release" />
-                            <String fx:value="#links" />
-                            <String fx:value="dev" />
+                            <String fx:value="Release"/>
+                            <String fx:value="#links"/>
+                            <String fx:value="dev"/>
                         </FXCollections>
                     </items>
                 </ChoiceBox>
-                <Label layoutX="18.0" layoutY="254.0" text="Java Version" />
-                <ChoiceBox fx:id="javaCB" layoutX="198.0" layoutY="254.0" prefWidth="150.0">
+                <Label layoutX="18.0" layoutY="194.0" text="Java Version"/>
+                <ChoiceBox fx:id="javaCB" layoutX="165.0" layoutY="194.0" prefWidth="150.0">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="Java 18" />
-                            <String fx:value="Java 17" />
-                            <String fx:value="Java 11" />
-                            <String fx:value="Java 8" />
+                            <String fx:value="Java 18"/>
+                            <String fx:value="Java 17"/>
+                            <String fx:value="Java 11"/>
+                            <String fx:value="Java 8"/>
                         </FXCollections>
                     </items>
                 </ChoiceBox>
-                <Label layoutX="18.0" layoutY="304.0" text="Testing Setups in work" />
-                <Label fx:id="inWorkNumber" layoutX="154.0" layoutY="271.0" />
-                <ProgressBar fx:id="inWorkProgress" layoutX="184.0" layoutY="304.0" prefWidth="200.0" progress="0.0" />
-            <Label layoutX="20.0" layoutY="214.0" prefHeight="17.0" prefWidth="40.0" text="Other" />
-            <CheckBox fx:id="aNether" layoutX="104.0" layoutY="214.0" mnemonicParsing="false" text="Allow Nether" />
+                <Label layoutX="20.0" layoutY="234.0" prefHeight="17.0" prefWidth="40.0" text="Misc"/>
+                <CheckBox fx:id="aNether" layoutX="165.0" layoutY="234.0" mnemonicParsing="false" text="Allow Nether"/>
+                <Label layoutX="18.0" layoutY="304.0" text="Testing Setups in work"/>
+                <Label fx:id="inWorkNumber" layoutX="142.0" layoutY="304.0"/>
+                <ProgressBar fx:id="inWorkProgress" layoutX="165.0" layoutY="304.0" prefWidth="165.0" progress="0.0"/>
+                <Button fx:id="btn" layoutX="165.0" layoutY="349.0" mnemonicParsing="false" text="Create"/>
             </children>
         </AnchorPane>
     </center>

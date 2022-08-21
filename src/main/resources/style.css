@@ -21,6 +21,6 @@ Button {
     -fx-cursor: hand;
 }
 
-Button:hover, CheckBox:hover {
+Button:hover, CheckBox:hover, ChoiceBox:hover {
     -fx-background-color: #9a9a9a;
 }

@@ -20,7 +20,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(fxmlpath);
         Parent root = loader.load();
         Controller controller = loader.getController();
-        primaryStage.setTitle("ViaTesting - ALPHA");
+        primaryStage.setTitle("ViaTesting - Beta");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/logo-256.png")));
         primaryStage.resizableProperty().setValue(Boolean.FALSE);
