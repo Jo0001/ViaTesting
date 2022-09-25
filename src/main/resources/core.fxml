@@ -53,6 +53,7 @@
                 </ChoiceBox>
                 <Label layoutX="20.0" layoutY="234.0" prefHeight="17.0" prefWidth="40.0" text="Misc"/>
                 <CheckBox fx:id="aNether" layoutX="165.0" layoutY="234.0" mnemonicParsing="false" text="Allow Nether"/>
+                <CheckBox fx:id="aEnd" layoutX="275.0" layoutY="234.0" mnemonicParsing="false" text="Allow End"/>
                 <Label layoutX="18.0" layoutY="304.0" text="Testing Setups in work"/>
                 <Label fx:id="inWorkNumber" layoutX="142.0" layoutY="304.0"/>
                 <ProgressBar fx:id="inWorkProgress" layoutX="165.0" layoutY="304.0" prefWidth="165.0" progress="0.0"/>
