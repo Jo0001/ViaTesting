@@ -39,7 +39,7 @@ public class AssetUtil {
     }
 
     public static void loadServerAssets(String asset, boolean nether, boolean end, File dir) {
-        String[] paperBase = {"banned-ips.json", "banned-players.json", "bukkit.yml", "commands.yml", "eula.txt", "ops.json", "paper.yml", "server.properties", "server-icon.png", "whitelist.json"};
+        String[] paperBase = {"bukkit.yml", "commands.yml", "eula.txt", "paper.yml", "server.properties", "server-icon.png"};
         String[] paperWaterfall = {"spigot.yml"};
         String[] waterfall = {"config.yml", "server-icon.png", "waterfall.yml"};
 

@@ -12,7 +12,7 @@
     <center>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="20.0" layoutY="34.0" text="Server version (Paper)"/>
+                <Label layoutX="20.0" layoutY="34.0" text="Server Version (Paper)"/>
                 <ChoiceBox fx:id="versionCB" layoutX="165.0" layoutY="30.0" prefWidth="150.0" value="1.17">
                 </ChoiceBox>
                 <Label layoutX="20.0" layoutY="74.0" prefHeight="17.0" prefWidth="50.0" text="Proxy"/>
