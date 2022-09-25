@@ -1,10 +1,14 @@
 package main.java.de.jo0001.viaTesting.util;
 
+import com.esotericsoftware.yamlbeans.YamlReader;
+import com.esotericsoftware.yamlbeans.YamlWriter;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.LinkedHashMap;
 import java.util.Properties;
 import java.util.Random;
 
@@ -31,10 +35,10 @@ public class AssetUtil {
     }
 
     public static void loadServerAssets(String asset, File dir) {
-        loadServerAssets(asset, false, dir);
+        loadServerAssets(asset, false, false, dir);
     }
 
-    public static void loadServerAssets(String asset, boolean nether, File dir) {
+    public static void loadServerAssets(String asset, boolean nether, boolean end, File dir) {
         String[] paperBase = {"banned-ips.json", "banned-players.json", "bukkit.yml", "commands.yml", "eula.txt", "ops.json", "paper.yml", "server.properties", "server-icon.png", "whitelist.json"};
         String[] paperWaterfall = {"spigot.yml"};
         String[] waterfall = {"config.yml", "server-icon.png", "waterfall.yml"};
@@ -43,6 +47,9 @@ public class AssetUtil {
             copyFiles(paperBase, "paper", dir);
             if (nether) {
                 changeProperties(dir, "allow-nether", "true");
+            }
+            if (end) {
+                changeYML(dir, "/bukkit.yml", "settings", "allow-end", "true");
             }
             if (asset.equals("paperProxy")) {
                 copyFiles(paperWaterfall, "paper-waterfall", dir);
@@ -68,6 +75,25 @@ public class AssetUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void changeYML(File dir, String file, String nest, String property, String value) {
+        try {
+            YamlReader reader = new YamlReader(new FileReader(dir + file));
+            LinkedHashMap<String, Object> list = (LinkedHashMap<String, Object>) reader.read();
+            if (nest != null) {
+                LinkedHashMap<String, Object> subList = (LinkedHashMap<String, Object>) list.get(nest);
+                subList.replace(property, value);
+            } else {
+                list.replace(property, value);
+            }
+            YamlWriter writer = new YamlWriter(new FileWriter(dir + file));
+            writer.write(list);
+            writer.close();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+
     }
 
     private static void copyFiles(String[] files, String base, File output) {
