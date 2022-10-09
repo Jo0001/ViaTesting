@@ -45,9 +45,15 @@ public class Downloader extends Thread {
                 File defaultRoot = root;
                 root = new File(root.getAbsolutePath() + "/Paper-Server");
                 downloadPaperServer();
-                root = new File(defaultRoot.getAbsolutePath() + "/Waterfall-Server");
-                downloadWaterfallServer();
-                if (!proxySettings.equalsIgnoreCase("Waterfall with Via")) {
+                if (proxySettings.contains("Bungee")) {
+                    root = new File(defaultRoot.getAbsolutePath() + "/Bungee-Server");
+                    downloadBungee();
+                } else {
+                    root = new File(defaultRoot.getAbsolutePath() + "/Waterfall-Server");
+                    downloadWaterfallServer();
+                }
+
+                if (!proxySettings.contains("with Via")) {
                     root = new File(defaultRoot.getAbsolutePath() + "/Paper-Server");
                 }
                 downloadVia();
@@ -84,6 +90,10 @@ public class Downloader extends Thread {
         downloadFile(DownloadUtil.getDownloadURL("waterfall", DownloadUtil.getLatestWaterfallMCVersion()), "/waterfall-latest.jar");
     }
 
+    private void downloadBungee() throws IOException {
+        downloadFile(new URL("https://ci.md-5.net/job/BungeeCord/lastSuccessfulBuild/artifact/bootstrap/target/BungeeCord.jar"), "/bungee-latest.jar");
+    }
+
     private void downloadVia() throws IOException {
         if (type.equalsIgnoreCase("Release")) {
             downloadFile(new URL("https://api.spiget.org/v2/resources/19254/download"), "/plugins/ViaVersion-release.jar");
@@ -97,14 +107,14 @@ public class Downloader extends Thread {
                 }
             }
         } else {
-            downloadFile(DownloadUtil.getLatestViaFileUrl("ViaVersion",type));
+            downloadFile(DownloadUtil.getLatestViaFileUrl("ViaVersion", type));
             if (isViaBackwards) {
-                downloadFile(DownloadUtil.getLatestViaFileUrl("ViaBackwards",type));
+                downloadFile(DownloadUtil.getLatestViaFileUrl("ViaBackwards", type));
             }
             if (isViaRewind) {
-                downloadFile(DownloadUtil.getLatestViaFileUrl("ViaRewind",type));
+                downloadFile(DownloadUtil.getLatestViaFileUrl("ViaRewind", type));
                 if (isViaRewindLegacySupport) {
-                    downloadFile(DownloadUtil.getLatestViaFileUrl("ViaRewind%20Legacy%20Support",type));
+                    downloadFile(DownloadUtil.getLatestViaFileUrl("ViaRewind%20Legacy%20Support", type));
                 }
             }
         }

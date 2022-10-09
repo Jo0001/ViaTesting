@@ -22,6 +22,8 @@
                             <String fx:value="None"/>
                             <String fx:value="Waterfall"/>
                             <String fx:value="Waterfall with Via"/>
+                            <String fx:value="Bungee with Via"/>
+                            <String fx:value="Bungee"/>
                         </FXCollections>
                     </items>
                 </ChoiceBox>

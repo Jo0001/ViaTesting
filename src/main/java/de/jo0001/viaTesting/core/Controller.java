@@ -127,11 +127,11 @@ public class Controller implements Initializable {
                 AssetUtil.createStartBat("paper-" + version, java, splitDir);
                 pluginsDir = new File(splitDir.getPath() + "/plugins");
                 pluginsDir.mkdir();
-                splitDir = new File(dir.getAbsolutePath() + "/Waterfall-Server");
+                splitDir = proxySettings.contains("Bungee") ? new File(dir.getAbsolutePath() + "/Bungee-Server") : new File(dir.getAbsolutePath() + "/Waterfall-Server");
                 splitDir.mkdir();
                 pluginsDir = new File(splitDir.getPath() + "/plugins");
                 AssetUtil.loadServerAssets("waterfall", splitDir);
-                AssetUtil.createStartBat("waterfall-latest", java, splitDir);
+                AssetUtil.createStartBat(proxySettings.contains("Bungee") ? "bungee-latest" : "waterfall-latest", java, splitDir);
             } else {
                 AssetUtil.loadServerAssets(serverAssets, allowNether, allowEnd, dir);
                 AssetUtil.createStartBat("paper-" + version, java, dir);
