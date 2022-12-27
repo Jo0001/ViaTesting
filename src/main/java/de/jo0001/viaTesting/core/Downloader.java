@@ -1,8 +1,8 @@
-package main.java.de.jo0001.viaTesting.core;
+package de.jo0001.viaTesting.core;
 
 import javafx.scene.control.Alert;
-import main.java.de.jo0001.viaTesting.util.DownloadUtil;
-import main.java.de.jo0001.viaTesting.util.Util;
+import de.jo0001.viaTesting.util.DownloadUtil;
+import de.jo0001.viaTesting.util.Util;
 
 import java.io.File;
 import java.io.FileOutputStream;

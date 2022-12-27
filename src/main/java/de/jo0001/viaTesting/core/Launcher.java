@@ -1,4 +1,4 @@
-package main.java.de.jo0001.viaTesting.core;
+package de.jo0001.viaTesting.core;
 
 public class Launcher {
     public static void main(String[] args) {

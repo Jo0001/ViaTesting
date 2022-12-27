@@ -1,7 +1,7 @@
-package main.java.de.jo0001.viaTesting.util;
+package de.jo0001.viaTesting.util;
 
 import com.google.gson.*;
-import main.java.de.jo0001.viaTesting.core.Main;
+import de.jo0001.viaTesting.core.Main;
 
 import java.io.BufferedReader;
 import java.io.IOException;

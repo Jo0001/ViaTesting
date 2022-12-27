@@ -1,4 +1,4 @@
-package main.java.de.jo0001.viaTesting.util;
+package de.jo0001.viaTesting.util;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;

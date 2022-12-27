@@ -1,4 +1,4 @@
-package main.java.de.jo0001.viaTesting.core;
+package de.jo0001.viaTesting.core;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -6,9 +6,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import main.java.de.jo0001.viaTesting.util.AssetUtil;
-import main.java.de.jo0001.viaTesting.util.DownloadUtil;
-import main.java.de.jo0001.viaTesting.util.Util;
+import de.jo0001.viaTesting.util.AssetUtil;
+import de.jo0001.viaTesting.util.DownloadUtil;
+import de.jo0001.viaTesting.util.Util;
 
 import java.io.*;
 import java.net.URL;

@@ -1,4 +1,4 @@
-package main.java.de.jo0001.viaTesting.core;
+package de.jo0001.viaTesting.core;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
