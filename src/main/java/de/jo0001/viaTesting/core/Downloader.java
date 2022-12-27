@@ -98,7 +98,7 @@ public class Downloader extends Thread {
         if (type.equalsIgnoreCase("Release")) {
             downloadFile(new URL("https://api.spiget.org/v2/resources/19254/download"), "/plugins/ViaVersion-release.jar");
             if (isViaBackwards) {
-                downloadFile(new URL("https://api.spiget.org/v2/resources/27448/download"), "/plugins/ViaBackwards-release.jar");
+                downloadFile(new URL(DownloadUtil.getLatestViaFromHangar("ViaBackwards")), "/plugins/ViaBackwards-release.jar");
             }
             if (isViaRewind) {
                 downloadFile(new URL("https://api.spiget.org/v2/resources/52109/download"), "/plugins/ViaRewind-release.jar");

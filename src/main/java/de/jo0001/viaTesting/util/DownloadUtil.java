@@ -33,6 +33,11 @@ public class DownloadUtil {
         return "https://ci.viaversion.com/job/" + project + "/lastSuccessfulBuild/artifact/" + fetchData("https://ci.viaversion.com/job/" + project + "/lastSuccessfulBuild/api/json?tree=artifacts[relativePath]").getAsJsonArray("artifacts").get(0).getAsJsonObject().get("relativePath").getAsString();
     }
 
+    public static String getLatestViaFromHangar(String project) throws IOException {
+        JsonObject data = fetchData("https://hangar.papermc.io/api/v1/projects/ViaVersion/" + project + "/versions?channel=Release&limit=1&offset=0&platform=paper").getAsJsonArray("result").get(0).getAsJsonObject().getAsJsonObject("downloads").getAsJsonObject("PAPER");
+        return data.get("fileInfo").isJsonNull() ? data.get("externalUrl").getAsString() : data.get("downloadUrl").getAsString();
+    }
+
     public static JsonArray getVersions() throws IOException {
         return fetchData("https://papermc.io/api/v2/projects/paper").getAsJsonArray("versions");
     }
