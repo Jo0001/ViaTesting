@@ -52,6 +52,12 @@ public class Controller implements Initializable {
         ObservableList items = javaCB.getItems();
         String value = "System (" + System.getProperty("java.version") + ")";
         items.add(0, value);
+        int[] javaVersions = {8, 11, 17, 19};
+        for (int javaVersion : javaVersions) {
+            if (new File("java-" + javaVersion).exists()) {
+                items.add("Java " + javaVersion);
+            }
+        }
         javaCB.setItems(items);
         javaCB.setValue(value);
 

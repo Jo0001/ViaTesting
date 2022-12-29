@@ -43,12 +43,7 @@
             <Label layoutX="18.0" layoutY="194.0" text="Java Version"/>
             <ChoiceBox fx:id="javaCB" layoutX="165.0" layoutY="194.0" prefWidth="150.0">
                 <items>
-                    <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="Java 18"/>
-                        <String fx:value="Java 17"/>
-                        <String fx:value="Java 11"/>
-                        <String fx:value="Java 8"/>
-                    </FXCollections>
+                    <FXCollections fx:factory="observableArrayList"/>
                 </items>
             </ChoiceBox>
             <Label layoutX="20.0" layoutY="234.0" prefHeight="17.0" prefWidth="40.0" text="Misc"/>
