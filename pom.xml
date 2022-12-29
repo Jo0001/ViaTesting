@@ -54,7 +54,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>main.java.de.jo0001.viaTesting.core.Launcher</mainClass>
+                            <mainClass>de.jo0001.viaTesting.core.Launcher</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
