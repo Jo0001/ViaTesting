@@ -1,5 +1,6 @@
 package de.jo0001.viaTesting.core;
 
+import de.jo0001.viaTesting.util.UpdateCheck;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,6 +38,9 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        new UpdateCheck().start();
+
         Platform.runLater(() -> {
             ObservableList<String> list = FXCollections.observableArrayList();
             try {

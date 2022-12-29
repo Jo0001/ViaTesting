@@ -42,10 +42,14 @@ public class DownloadUtil {
         return fetchData("https://papermc.io/api/v2/projects/paper").getAsJsonArray("versions");
     }
 
+    public static JsonObject getLatestViaTesting() throws IOException {
+        return fetchData("https://api.github.com/repos/Jo0001/ViaTesting/releases/latest");
+    }
+
     private static JsonObject fetchData(String url) throws IOException {
         //stolen from Eduard
         final HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-        connection.setRequestProperty("User-Agent", "ViaTesting");
+        connection.setRequestProperty("User-Agent", "ViaTesting-" + Main.VERSION);
         final StringBuilder contentBuilder = new StringBuilder();
         try (final BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
             String input;

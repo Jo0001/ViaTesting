@@ -9,10 +9,14 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.util.Properties;
 
 public class Main extends Application {
     public static Gson GSON = new GsonBuilder().create();
+    public static final String VERSION = detectVersion();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -20,7 +24,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(fxmlpath);
         Parent root = loader.load();
         Controller controller = loader.getController();
-        primaryStage.setTitle("ViaTesting - Beta");
+        primaryStage.setTitle("ViaTesting - " + VERSION);
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/logo-256.png")));
         primaryStage.resizableProperty().setValue(Boolean.FALSE);
@@ -30,5 +34,18 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    private static String detectVersion() {
+        try {
+            InputStream input = Main.class.getResourceAsStream("/version.properties");
+            Properties prop = new Properties();
+            prop.load(input);
+            input.close();
+            return prop.get("version").toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
