@@ -25,7 +25,7 @@ public class Main extends Application {
         Parent root = loader.load();
         Controller controller = loader.getController();
         primaryStage.setTitle("ViaTesting - " + VERSION);
-        primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setScene(new Scene(root, 600, 430));
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/logo-256.png")));
         primaryStage.resizableProperty().setValue(Boolean.FALSE);
         primaryStage.getScene().getStylesheets().add(Main.class.getResource("/style.css").toExternalForm());

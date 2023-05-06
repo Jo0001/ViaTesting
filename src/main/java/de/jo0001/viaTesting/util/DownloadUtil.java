@@ -46,6 +46,10 @@ public class DownloadUtil {
         return fetchData("https://api.github.com/repos/Jo0001/ViaTesting/releases/latest");
     }
 
+    public static JsonObject getDumpData(String url) throws IOException {
+        return fetchData(url);
+    }
+
     private static JsonObject fetchData(String url) throws IOException {
         //stolen from Eduard
         final HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();

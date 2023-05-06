@@ -1,5 +1,7 @@
 package de.jo0001.viaTesting.core;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import de.jo0001.viaTesting.util.UpdateCheck;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -22,11 +24,13 @@ public class Controller implements Initializable {
     @FXML
     CheckBox vB, vR, vRSup, aNether, aEnd;
     @FXML
-    Button btn;
+    Button btn, loadBtn;
     @FXML
     Label inWorkNumber;
     @FXML
     ProgressBar inWorkProgress;
+    @FXML
+    TextField dumpUrl;
     final int MAX_CONCURRENT_SETUPS = 4;
 
     private int count = 0;
@@ -93,6 +97,15 @@ public class Controller implements Initializable {
                 Util.alert("Error", e.toString(), Alert.AlertType.ERROR);
             }
         });
+
+        loadBtn.setOnAction(actionEvent -> {
+            try {
+                loadFromDump();
+            } catch (Exception e) {
+                e.printStackTrace();
+                Util.alert("Error", e.toString(), Alert.AlertType.ERROR);
+            }
+        });
     }
 
     public void incrementCount() {
@@ -153,6 +166,47 @@ public class Controller implements Initializable {
             downloader.start();
         } else {
             Util.alert(MAX_CONCURRENT_SETUPS + " is a nice number", "Please wait. There are already " + MAX_CONCURRENT_SETUPS + " testing setups in work", Alert.AlertType.INFORMATION);
+        }
+    }
+
+    private void loadFromDump() throws IOException {
+        String dUrl = dumpUrl.getText();
+        if (dUrl.startsWith("https://dump.viaversion.com/")) {
+            dUrl = "https://dump.viaversion.com/raw/" + dUrl.split("/")[3];
+            JsonObject dumpData = DownloadUtil.getDumpData(dUrl);
+            JsonObject versionInfo = dumpData.getAsJsonObject("versionInfo");
+            boolean isProxy = false;
+            String platform = versionInfo.get("platformName").getAsString();
+            if (platform.equalsIgnoreCase("Waterfall")) {
+                proxyCB.setValue("Waterfall with Via");
+                isProxy = true;
+            } else if (platform.equalsIgnoreCase("BungeeCord")) {
+                proxyCB.setValue("Bungee with Via");
+                isProxy = true;
+            }
+
+            for (JsonElement element : versionInfo.getAsJsonArray("subPlatforms")) {
+                String sub = element.getAsString();
+                if (sub.contains("ViaBackwards")) {
+                    vB.setSelected(true);
+                } else if (sub.contains("ViaRewind")) {
+                    vR.setSelected(true);
+                }
+            }
+
+            if (!isProxy) {//don't set version or check for VRLS on proxies
+                String version = Util.idToVersion(versionInfo.get("serverProtocol").getAsInt());
+                if (!version.equalsIgnoreCase("Unknown")) {
+                    versionCB.setValue(version);
+                }
+
+                for (JsonElement el : dumpData.getAsJsonObject("platformDump").getAsJsonArray("plugins")) {
+                    if (el.getAsJsonObject().get("name").getAsString().equalsIgnoreCase("ViaRewind-Legacy-Support")) {
+                        vRSup.setSelected(true);
+                        break;
+                    }
+                }
+            }
         }
     }
 }

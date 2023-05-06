@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.collections.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-            prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="de.jo0001.viaTesting.core.Controller">
     <center>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
@@ -49,10 +55,14 @@
             <Label layoutX="20.0" layoutY="234.0" prefHeight="17.0" prefWidth="40.0" text="Misc"/>
             <CheckBox fx:id="aNether" layoutX="165.0" layoutY="234.0" mnemonicParsing="false" text="Allow Nether"/>
             <CheckBox fx:id="aEnd" layoutX="275.0" layoutY="234.0" mnemonicParsing="false" text="Allow End"/>
-            <Label layoutX="18.0" layoutY="304.0" text="Testing Setups in work"/>
-            <Label fx:id="inWorkNumber" layoutX="142.0" layoutY="304.0"/>
-            <ProgressBar fx:id="inWorkProgress" layoutX="165.0" layoutY="304.0" prefWidth="165.0" progress="0.0"/>
-            <Button fx:id="btn" layoutX="165.0" layoutY="349.0" mnemonicParsing="false" text="Create"/>
+            <Label layoutX="18.0" layoutY="279.0" text="Import from dump"/>
+            <TextField fx:id="dumpUrl" layoutX="165.0" layoutY="279.0" prefHeight="25.0" prefWidth="280.0"
+                       promptText="https://dump.viaversion.com/0123456789abcdef"/>
+            <Label layoutX="18.0" layoutY="332.0" text="Testing Setups in work"/>
+            <Label fx:id="inWorkNumber" layoutX="142.0" layoutY="332.0"/>
+            <ProgressBar fx:id="inWorkProgress" layoutX="165.0" layoutY="332.0" prefWidth="165.0" progress="0.0"/>
+            <Button fx:id="btn" layoutX="165.0" layoutY="377.0" mnemonicParsing="false" text="Create"/>
+            <Button fx:id="loadBtn" layoutX="455.0" layoutY="279.0" mnemonicParsing="false" text="Load"/>
         </AnchorPane>
     </center>
 </BorderPane>
