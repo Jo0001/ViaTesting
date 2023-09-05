@@ -96,14 +96,14 @@ public class Downloader extends Thread {
 
     private void downloadVia() throws IOException {
         if (type.equalsIgnoreCase("Release")) {
-            downloadFile(new URL("https://api.spiget.org/v2/resources/19254/download"), "/plugins/ViaVersion-release.jar");
+            downloadFile(new URL(DownloadUtil.getLatestViaFromHangar("ViaVersion")), "/plugins/ViaVersion-release.jar");
             if (isViaBackwards) {
                 downloadFile(new URL(DownloadUtil.getLatestViaFromHangar("ViaBackwards")), "/plugins/ViaBackwards-release.jar");
             }
             if (isViaRewind) {
-                downloadFile(new URL("https://api.spiget.org/v2/resources/52109/download"), "/plugins/ViaRewind-release.jar");
+                downloadFile(new URL(DownloadUtil.getLatestViaFromHangar("ViaRewind")), "/plugins/ViaRewind-release.jar");
                 if (isViaRewindLegacySupport) {
-                    downloadFile(new URL("https://api.spiget.org/v2/resources/52924/download"), "/plugins/ViaRewindLegacySupport-release.jar");
+                    downloadFile(new URL(DownloadUtil.getLatestViaFromHangar("ViaRewindLegacySupport")), "/plugins/ViaRewindLegacySupport-release.jar");
                 }
             }
         } else {

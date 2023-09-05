@@ -34,7 +34,7 @@ public class DownloadUtil {
     }
 
     public static String getLatestViaFromHangar(String project) throws IOException {
-        JsonObject data = fetchData("https://hangar.papermc.io/api/v1/projects/ViaVersion/" + project + "/versions?channel=Release&limit=1&offset=0&platform=paper").getAsJsonArray("result").get(0).getAsJsonObject().getAsJsonObject("downloads").getAsJsonObject("PAPER");
+        JsonObject data = fetchData("https://hangar.papermc.io/api/v1/projects/" + project + "/versions?channel=Release&limit=1&offset=0&platform=paper").getAsJsonArray("result").get(0).getAsJsonObject().getAsJsonObject("downloads").getAsJsonObject("PAPER");
         return data.get("fileInfo").isJsonNull() ? data.get("externalUrl").getAsString() : data.get("downloadUrl").getAsString();
     }
 
