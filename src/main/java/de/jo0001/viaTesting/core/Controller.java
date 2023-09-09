@@ -81,7 +81,7 @@ public class Controller implements Initializable {
             }
         });
         proxyCB.setOnAction(actionEvent -> {
-            if (proxyCB.getValue().toString().equalsIgnoreCase("Waterfall with Via")) {
+            if (proxyCB.getValue().toString().equalsIgnoreCase("Waterfall with Via") || proxyCB.getValue().toString().equalsIgnoreCase("Bungee with Via") || proxyCB.getValue().toString().equalsIgnoreCase("Velocity with Via")) {
                 vRSup.setSelected(false);
                 vRSup.setDisable(true);
             } else {
@@ -150,11 +150,15 @@ public class Controller implements Initializable {
                 AssetUtil.createStartBat("paper-" + version, java, splitDir);
                 pluginsDir = new File(splitDir.getPath() + "/plugins");
                 pluginsDir.mkdir();
-                splitDir = proxySettings.contains("Bungee") ? new File(dir.getAbsolutePath() + "/Bungee-Server") : new File(dir.getAbsolutePath() + "/Waterfall-Server");
+                splitDir = proxySettings.contains("Bungee") ? new File(dir.getAbsolutePath() + "/Bungee-Server") : proxySettings.contains("Velocity") ? new File(dir.getAbsolutePath() + "/Velocity-Server") : new File(dir.getAbsolutePath() + "/Waterfall-Server");
                 splitDir.mkdir();
                 pluginsDir = new File(splitDir.getPath() + "/plugins");
-                AssetUtil.loadServerAssets("waterfall", splitDir);
-                AssetUtil.createStartBat(proxySettings.contains("Bungee") ? "bungee-latest" : "waterfall-latest", java, splitDir);
+                if(proxySettings.contains("Velocity")){
+                    AssetUtil.loadServerAssets("velocity", splitDir);
+                }else {
+                    AssetUtil.loadServerAssets("waterfall", splitDir);
+                }
+                AssetUtil.createStartBat(proxySettings.contains("Bungee") ? "bungee-latest" : proxySettings.contains("Velocity") ? "velocity-latest" : "waterfall-latest", java, splitDir);
             } else {
                 AssetUtil.loadServerAssets(serverAssets, allowNether, allowEnd, dir);
                 AssetUtil.createStartBat("paper-" + version, java, dir);

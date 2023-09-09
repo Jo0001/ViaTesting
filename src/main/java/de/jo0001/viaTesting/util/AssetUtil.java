@@ -42,6 +42,7 @@ public class AssetUtil {
         String[] paperBase = {"bukkit.yml", "commands.yml", "eula.txt", "paper.yml", "server.properties", "server-icon.png"};
         String[] paperWaterfall = {"spigot.yml"};
         String[] waterfall = {"config.yml", "server-icon.png", "waterfall.yml"};
+        String[] velocity = {"server-icon.png", "velocity.toml", "forwarding.secret"};
 
         if (asset.startsWith("paper")) {
             copyFiles(paperBase, "paper", dir);
@@ -58,6 +59,8 @@ public class AssetUtil {
             }
         } else if (asset.equalsIgnoreCase("waterfall")) {
             copyFiles(waterfall, "waterfall", dir);
+        } else if (asset.equalsIgnoreCase("velocity")) {
+            copyFiles(velocity, "velocity", dir);
         }
     }
 

@@ -48,6 +48,9 @@ public class Downloader extends Thread {
                 if (proxySettings.contains("Bungee")) {
                     root = new File(defaultRoot.getAbsolutePath() + "/Bungee-Server");
                     downloadBungee();
+                } else if (proxySettings.contains("Velocity")) {
+                    root = new File(defaultRoot.getAbsolutePath() + "/Velocity-Server");
+                    downloadVelocityServer();
                 } else {
                     root = new File(defaultRoot.getAbsolutePath() + "/Waterfall-Server");
                     downloadWaterfallServer();
@@ -87,7 +90,11 @@ public class Downloader extends Thread {
     }
 
     private void downloadWaterfallServer() throws IOException {
-        downloadFile(DownloadUtil.getDownloadURL("waterfall", DownloadUtil.getLatestWaterfallMCVersion()), "/waterfall-latest.jar");
+        downloadFile(DownloadUtil.getDownloadURL("waterfall", DownloadUtil.getLatestProxyMCVersion("waterfall")), "/waterfall-latest.jar");
+    }
+
+    private void downloadVelocityServer() throws IOException {
+        downloadFile(DownloadUtil.getDownloadURL("velocity", DownloadUtil.getLatestProxyMCVersion("velocity")), "/velocity-latest.jar");
     }
 
     private void downloadBungee() throws IOException {

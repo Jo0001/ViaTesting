@@ -21,8 +21,8 @@ public class DownloadUtil {
         return builds.get(builds.size() - 1).getAsInt();
     }
 
-    public static String getLatestWaterfallMCVersion() throws IOException {
-        JsonArray versions = fetchData("https://papermc.io/api/v2/projects/waterfall").getAsJsonArray("versions");
+    public static String getLatestProxyMCVersion(String proxy) throws IOException {
+        JsonArray versions = fetchData("https://papermc.io/api/v2/projects/"+proxy).getAsJsonArray("versions");
         return versions.get(versions.size() - 1).getAsString();
     }
 
