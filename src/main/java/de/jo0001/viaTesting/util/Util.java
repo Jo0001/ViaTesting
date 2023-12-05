@@ -99,7 +99,11 @@ public class Util {
             case 761:
                 return "1.19.3";
             case 762:
-                return "1.19.4";
+                return "1.20";
+            case 763:
+                return "1.20.2";
+            case 764:
+                return "1.20.3";
             default:
                 return "Unknown";
         }
