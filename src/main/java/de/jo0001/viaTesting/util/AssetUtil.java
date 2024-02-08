@@ -25,7 +25,7 @@ public class AssetUtil {
         final String[] NAMES_2 = {"chicken", "cow", "mooshroom", "pig", "sheep", "squid", "villager", "wandering_trader", "bat",
                 "ocelot", "cat", "horse", "donkey", "mule", "skeleton_horse", "strider", "fox", "rabbit", "parrot", "turtle", "cod",
                 "salmon", "pufferfish", "tropical_fish", "enderman", "piglin", "zombified_piglin", "dolphin", "bee", "wolf",
-                "spider", "cave_spider", "polar_bear", "llama", "iron_golem", "panda", "warden", "allay", "slime", "vex", "stray", "vindicator", "witch","camel","sniffer"};
+                "spider", "cave_spider", "polar_bear", "llama", "iron_golem", "panda", "warden", "allay", "slime", "vex", "stray", "vindicator", "witch", "camel", "sniffer"};
         Random random = new Random();
         File dir = new File(System.getProperty("java.io.tmpdir") + "ViaTesting-" + NAMES_1[random.nextInt(NAMES_1.length)] + "-" + NAMES_2[random.nextInt(NAMES_2.length)]);
         if (dir.exists()) {
@@ -39,7 +39,7 @@ public class AssetUtil {
     }
 
     public static void loadServerAssets(String asset, boolean nether, boolean end, File dir) {
-        String[] paperBase = {"bukkit.yml", "commands.yml", "eula.txt", "paper.yml", "server.properties", "server-icon.png"};
+        String[] paperBase = {"bukkit.yml", "commands.yml", "eula.txt", "server.properties", "server-icon.png"};
         String[] paperWaterfall = {"spigot.yml"};
         String[] waterfall = {"config.yml", "server-icon.png", "waterfall.yml"};
         String[] velocity = {"server-icon.png", "velocity.toml", "forwarding.secret"};
