@@ -2,7 +2,6 @@ package de.jo0001.viaTesting.util;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
-import javafx.scene.control.DialogEvent;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -99,11 +98,13 @@ public class Util {
             case 761:
                 return "1.19.3";
             case 762:
-                return "1.20";
+                return "1.19.4";
             case 763:
-                return "1.20.2";
+                return "1.20.1";
             case 764:
-                return "1.20.3";
+                return "1.20.2";
+            case 765:
+                return "1.20.4";
             default:
                 return "Unknown";
         }

@@ -17,6 +17,8 @@ import java.io.*;
 import java.net.URL;
 import java.util.Collections;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Controller implements Initializable {
     @FXML
@@ -34,6 +36,7 @@ public class Controller implements Initializable {
     final int MAX_CONCURRENT_SETUPS = 4;
 
     private int count = 0;
+    private final Logger logger = Logger.getAnonymousLogger();
 
     public Controller() {
         System.out.println("Controller loading");
@@ -153,9 +156,9 @@ public class Controller implements Initializable {
                 splitDir = proxySettings.contains("Bungee") ? new File(dir.getAbsolutePath() + "/Bungee-Server") : proxySettings.contains("Velocity") ? new File(dir.getAbsolutePath() + "/Velocity-Server") : new File(dir.getAbsolutePath() + "/Waterfall-Server");
                 splitDir.mkdir();
                 pluginsDir = new File(splitDir.getPath() + "/plugins");
-                if(proxySettings.contains("Velocity")){
+                if (proxySettings.contains("Velocity")) {
                     AssetUtil.loadServerAssets("velocity", splitDir);
-                }else {
+                } else {
                     AssetUtil.loadServerAssets("waterfall", splitDir);
                 }
                 AssetUtil.createStartBat(proxySettings.contains("Bungee") ? "bungee-latest" : proxySettings.contains("Velocity") ? "velocity-latest" : "waterfall-latest", java, splitDir);
@@ -177,6 +180,7 @@ public class Controller implements Initializable {
         String dUrl = dumpUrl.getText();
         if (dUrl.startsWith("https://dump.viaversion.com/")) {
             dUrl = "https://dump.viaversion.com/raw/" + dUrl.split("/")[3];
+            logger.log(Level.INFO, "Fetching dump from " + dUrl);
             JsonObject dumpData = DownloadUtil.getDumpData(dUrl);
             JsonObject versionInfo = dumpData.getAsJsonObject("versionInfo");
             boolean isProxy = false;
@@ -190,10 +194,10 @@ public class Controller implements Initializable {
             }
 
             for (JsonElement element : versionInfo.getAsJsonArray("subPlatforms")) {
-                String sub = element.getAsString();
-                if (sub.contains("ViaBackwards")) {
+                String sub = element.getAsString().toLowerCase();
+                if (sub.contains("viabackwards")) {
                     vB.setSelected(true);
-                } else if (sub.contains("ViaRewind")) {
+                } else if (sub.contains("viarewind")) {
                     vR.setSelected(true);
                 }
             }
