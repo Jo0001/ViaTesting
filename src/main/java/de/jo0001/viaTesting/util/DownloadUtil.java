@@ -22,7 +22,7 @@ public class DownloadUtil {
     }
 
     public static String getLatestProxyMCVersion(String proxy) throws IOException {
-        JsonArray versions = fetchData("https://papermc.io/api/v2/projects/"+proxy).getAsJsonArray("versions");
+        JsonArray versions = fetchData("https://papermc.io/api/v2/projects/" + proxy).getAsJsonArray("versions");
         return versions.get(versions.size() - 1).getAsString();
     }
 
@@ -48,6 +48,14 @@ public class DownloadUtil {
 
     public static JsonObject getDumpData(String url) throws IOException {
         return fetchData(url);
+    }
+
+    public static JsonObject getMojangData() throws IOException {
+        return fetchData("https://piston-meta.mojang.com/mc/game/version_manifest.json");
+    }
+
+    public static String getMojangJarUrl(String meta) throws IOException {
+        return fetchData(meta).get("downloads").getAsJsonObject().get("server").getAsJsonObject().get("url").getAsString();
     }
 
     private static JsonObject fetchData(String url) throws IOException {

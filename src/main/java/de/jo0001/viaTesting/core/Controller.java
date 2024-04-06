@@ -15,8 +15,7 @@ import de.jo0001.viaTesting.util.Util;
 
 import java.io.*;
 import java.net.URL;
-import java.util.Collections;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,6 +36,8 @@ public class Controller implements Initializable {
 
     private int count = 0;
     private final Logger logger = Logger.getAnonymousLogger();
+    private final ArrayList<String> mcVersionsPaper = new ArrayList<>();
+    private final HashMap<String, String> mojangjars = new HashMap<>();
 
     public Controller() {
         System.out.println("Controller loading");
@@ -48,14 +49,27 @@ public class Controller implements Initializable {
 
         new UpdateCheck().start();
 
+        try {
+            DownloadUtil.getVersions().forEach(e -> mcVersionsPaper.add(e.getAsString()));
+            JsonObject mojangData = DownloadUtil.getMojangData();
+            mojangData.getAsJsonArray("versions").forEach(e -> {
+                JsonObject eo = e.getAsJsonObject();
+                String id = eo.get("id").getAsString();
+                if (eo.get("type").getAsString().equals("release") && mcVersionsPaper.contains(id)) {
+                    try {
+                        mojangjars.put(id, DownloadUtil.getMojangJarUrl(eo.get("url").getAsString()));
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Platform.runLater(() -> {
             ObservableList<String> list = FXCollections.observableArrayList();
-            try {
-                DownloadUtil.getVersions().forEach(jsonElement -> list.add(jsonElement.getAsString()));
-            } catch (IOException e) {
-                e.printStackTrace();
-                Util.alert(e.toString());
-            }
+            list.addAll(mcVersionsPaper);
             Collections.reverse(list);
             versionCB.setItems(list);
             versionCB.setValue(list.get(0));
@@ -145,10 +159,11 @@ public class Controller implements Initializable {
 
             //load the default server assets
             String serverAssets = withProxy ? "paperProxy" : "paper";
-            File pluginsDir;
+            File pluginsDir, cacheDir;
             if (withProxy) {
                 File splitDir = new File(dir.getAbsolutePath() + "/Paper-Server");
                 splitDir.mkdir();
+                cacheDir = new File(splitDir.getPath() + "/cache");
                 AssetUtil.loadServerAssets(serverAssets, allowNether, allowEnd, splitDir);
                 AssetUtil.createStartBat("paper-" + version, java, splitDir);
                 pluginsDir = new File(splitDir.getPath() + "/plugins");
@@ -166,10 +181,12 @@ public class Controller implements Initializable {
                 AssetUtil.loadServerAssets(serverAssets, allowNether, allowEnd, dir);
                 AssetUtil.createStartBat("paper-" + version, java, dir);
                 pluginsDir = new File(dir.getPath() + "/plugins");
+                cacheDir = new File(dir.getPath() + "/cache");
             }
             pluginsDir.mkdir();
+            cacheDir.mkdir();
 
-            Downloader downloader = new Downloader(this, dir, proxySettings, type, version, vB.isSelected(), vR.isSelected(), vRSup.isSelected());
+            Downloader downloader = new Downloader(this, dir, proxySettings, type, version, vB.isSelected(), vR.isSelected(), vRSup.isSelected(), new URL(mojangjars.get(version)));
             downloader.start();
         } else {
             Util.alert(MAX_CONCURRENT_SETUPS + " is a nice number", "Please wait. There are already " + MAX_CONCURRENT_SETUPS + " testing setups in work", Alert.AlertType.INFORMATION);

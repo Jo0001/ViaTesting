@@ -23,9 +23,10 @@ public class Downloader extends Thread {
     private final boolean isViaBackwards;
     private final boolean isViaRewind;
     private final boolean isViaRewindLegacySupport;
+    private final URL mUrl;
     private final Logger logger;
 
-    public Downloader(Controller controller, File root, String proxySettings, String type, String version, boolean isViaBackwards, boolean isViaRewind, boolean isViaRewindLegacySupport) {
+    public Downloader(Controller controller, File root, String proxySettings, String type, String version, boolean isViaBackwards, boolean isViaRewind, boolean isViaRewindLegacySupport, URL mUrl) {
         this.controller = controller;
         this.root = root;
         this.proxySettings = proxySettings;
@@ -34,6 +35,7 @@ public class Downloader extends Thread {
         this.isViaBackwards = isViaBackwards;
         this.isViaRewind = isViaRewind;
         this.isViaRewindLegacySupport = isViaRewindLegacySupport;
+        this.mUrl = mUrl;
         logger = Logger.getAnonymousLogger();
     }
 
@@ -87,6 +89,7 @@ public class Downloader extends Thread {
 
     private void downloadPaperServer() throws IOException {
         downloadFile(DownloadUtil.getDownloadURL("paper", version), "/paper-" + version + ".jar");
+        downloadFile(mUrl, "/cache/mojang_" + version + ".jar");
     }
 
     private void downloadWaterfallServer() throws IOException {
