@@ -11,6 +11,9 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,54 +44,124 @@ public class Downloader extends Thread {
 
     @Override
     public void run() {
-        try {
-            boolean withProxy = !proxySettings.equalsIgnoreCase("None");
-            if (withProxy) {
-                File defaultRoot = root;
-                root = new File(root.getAbsolutePath() + "/Paper-Server");
-                downloadPaperServer();
-                if (proxySettings.contains("Bungee")) {
-                    root = new File(defaultRoot.getAbsolutePath() + "/Bungee-Server");
-                    downloadBungee();
-                } else if (proxySettings.contains("Velocity")) {
-                    root = new File(defaultRoot.getAbsolutePath() + "/Velocity-Server");
-                    downloadVelocityServer();
-                } else {
-                    root = new File(defaultRoot.getAbsolutePath() + "/Waterfall-Server");
-                    downloadWaterfallServer();
-                }
+        List<CompletableFuture<Void>> downloads = new ArrayList<>();
 
-                if (!proxySettings.contains("with Via")) {
-                    root = new File(defaultRoot.getAbsolutePath() + "/Paper-Server");
+        boolean withProxy = !proxySettings.equalsIgnoreCase("None");
+        if (withProxy) {
+            File defaultRoot = root;
+            root = new File(root.getAbsolutePath() + "/Paper-Server");
+            downloads.add(CompletableFuture.runAsync(() -> {
+                try {
+                    downloadPaperServer();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-                downloadVia();
-                root = defaultRoot;
+            }));
+            downloads.add(CompletableFuture.runAsync(() -> {
+                try {
+                    downloadMojangServer();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }));
+
+            if (proxySettings.contains("Bungee")) {
+                root = new File(defaultRoot.getAbsolutePath() + "/Bungee-Server");
+                downloads.add(CompletableFuture.runAsync(() -> {
+                    try {
+                        downloadBungee();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }));
+            } else if (proxySettings.contains("Velocity")) {
+                root = new File(defaultRoot.getAbsolutePath() + "/Velocity-Server");
+
+                downloads.add(CompletableFuture.runAsync(() -> {
+                    try {
+                        downloadVelocityServer();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }));
             } else {
-                downloadPaperServer();
-                downloadVia();
+                root = new File(defaultRoot.getAbsolutePath() + "/Waterfall-Server");
+                downloads.add(CompletableFuture.runAsync(() -> {
+                    try {
+                        downloadWaterfallServer();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }));
             }
 
-            if (System.getProperty("os.name").startsWith("Windows")) {
-                if (withProxy) {
-                    File temp = new File(root.getAbsolutePath());
-                    Runtime.getRuntime().exec("explorer.exe " + temp);
-                } else {
-                    File temp = new File(root.getAbsolutePath() + "/start.bat");
-                    Runtime.getRuntime().exec("explorer.exe /select," + temp);
-                }
-            } else {
-                Util.alert("Testserver is ready (" + root + ")", Alert.AlertType.INFORMATION);
+            if (!proxySettings.contains("with Via")) {
+                root = new File(defaultRoot.getAbsolutePath() + "/Paper-Server");
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            Util.alert("Error", e.toString(), Alert.AlertType.ERROR);
-        } finally {
-            controller.decrementCount();
+
+            downloads.add(CompletableFuture.runAsync(() -> {
+                try {
+                    downloadVia();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }));
+        } else {
+            downloads.add(CompletableFuture.runAsync(() -> {
+                try {
+                    downloadPaperServer();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }));
+            downloads.add(CompletableFuture.runAsync(() -> {
+                try {
+                    downloadMojangServer();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }));
+            downloads.add(CompletableFuture.runAsync(() -> {
+                try {
+                    downloadVia();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }));
         }
+
+        CompletableFuture<Void> allDownloads = CompletableFuture.allOf(downloads.toArray(new CompletableFuture[0]));
+
+        // Continue after all downloads are finished
+        allDownloads.thenRun(() -> {
+            try {
+                if (System.getProperty("os.name").startsWith("Windows")) {
+                    if (withProxy) {
+                        File temp = new File(root.getAbsolutePath());
+                        Runtime.getRuntime().exec("explorer.exe " + temp);
+                    } else {
+                        File temp = new File(root.getAbsolutePath() + "/start.bat");
+                        Runtime.getRuntime().exec("explorer.exe /select," + temp);
+                    }
+                } else {
+                    Util.alert("Testserver is ready (" + root + ")", Alert.AlertType.INFORMATION);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Util.alert("Error", e.toString(), Alert.AlertType.ERROR);
+            } finally {
+                controller.decrementCount();
+            }
+        });
+        allDownloads.join();
     }
 
     private void downloadPaperServer() throws IOException {
         downloadFile(DownloadUtil.getDownloadURL("paper", version), "/paper-" + version + ".jar");
+    }
+
+    private void downloadMojangServer() throws IOException {
         downloadFile(mUrl, "/cache/mojang_" + version + ".jar");
     }
 
