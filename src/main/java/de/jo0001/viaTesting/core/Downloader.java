@@ -19,8 +19,7 @@ import java.util.logging.Logger;
 
 public class Downloader extends Thread {
     private final Controller controller;
-    private File root;
-    private File proxyRoot;
+    private final File root;
     private final String proxySettings;
     private boolean withProxy;
     private String proxy;
@@ -51,8 +50,6 @@ public class Downloader extends Thread {
 
         withProxy = !proxySettings.equalsIgnoreCase("None");
         if (withProxy) {
-            File defaultRoot = root;
-            //root = new File(root.getAbsolutePath() + "/Paper-Server");
             downloads.add(CompletableFuture.runAsync(() -> {
                 try {
                     downloadPaperServer();
@@ -70,7 +67,6 @@ public class Downloader extends Thread {
 
             if (proxySettings.contains("Bungee")) {
                 proxy = "bungee";
-                //proxyRoot = new File(defaultRoot.getAbsolutePath() + "/Bungee-Server");
                 downloads.add(CompletableFuture.runAsync(() -> {
                     try {
                         downloadBungee();
@@ -80,8 +76,6 @@ public class Downloader extends Thread {
                 }));
             } else if (proxySettings.contains("Velocity")) {
                 proxy = "velocity";
-                //proxyRoot = new File(defaultRoot.getAbsolutePath() + "/Velocity-Server");
-
                 downloads.add(CompletableFuture.runAsync(() -> {
                     try {
                         downloadVelocityServer();
@@ -91,7 +85,6 @@ public class Downloader extends Thread {
                 }));
             } else {
                 proxy = "waterfall";
-                //proxyRoot = new File(defaultRoot.getAbsolutePath() + "/Waterfall-Server");
                 downloads.add(CompletableFuture.runAsync(() -> {
                     try {
                         downloadWaterfallServer();
@@ -100,10 +93,6 @@ public class Downloader extends Thread {
                     }
                 }));
             }
-
-          /*  if (!proxySettings.contains("with Via")) {
-                root = new File(defaultRoot.getAbsolutePath() + "/Paper-Server");
-            }*/
 
             downloads.add(CompletableFuture.runAsync(() -> {
                 try {
@@ -233,19 +222,16 @@ public class Downloader extends Thread {
                 return root.getPath();
             }
         }
-
         if (type.equals("plugin")) {
             if (withProxy) {
                 return (proxySettings.contains("Via") ? getBase(proxy) : getBase("paper")) + "/plugins";
             } else {
-                return root.getPath() + "/plugins";//todo fix
+                return root.getPath() + "/plugins";
             }
         }
-
         if (withProxy) {
             return root.getPath() + "/" + proxy + "-server";
         }
-
         return null;
     }
 }

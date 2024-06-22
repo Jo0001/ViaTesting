@@ -45,6 +45,8 @@ public class UpdateCheck extends Thread {
                         }
                     }
                 });
+            } else {
+                logger.log(Level.INFO, "No newer version found");
             }
         } catch (IOException e) {
             e.printStackTrace();

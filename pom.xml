@@ -6,7 +6,7 @@
 
     <groupId>de.jo0001</groupId>
     <artifactId>ViaTesting</artifactId>
-    <version>1.5-SNAPSHOT</version>
+    <version>1.5</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>

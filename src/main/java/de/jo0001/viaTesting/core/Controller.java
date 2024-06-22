@@ -40,7 +40,6 @@ public class Controller implements Initializable {
     private final HashMap<String, String> mojangjars = new HashMap<>();
 
     public Controller() {
-        System.out.println("Controller loading");
     }
 
 
@@ -50,6 +49,7 @@ public class Controller implements Initializable {
         new UpdateCheck().start();
 
         try {
+            logger.log(Level.INFO, "Fetching Mojang data");
             DownloadUtil.getVersions().forEach(e -> mcVersionsPaper.add(e.getAsString()));
             JsonObject mojangData = DownloadUtil.getMojangData();
             mojangData.getAsJsonArray("versions").forEach(e -> {
@@ -65,6 +65,8 @@ public class Controller implements Initializable {
             });
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            logger.log(Level.INFO, "Finished fetching Mojang data");
         }
 
         Platform.runLater(() -> {
