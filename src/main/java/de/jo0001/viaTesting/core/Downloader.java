@@ -20,7 +20,10 @@ import java.util.logging.Logger;
 public class Downloader extends Thread {
     private final Controller controller;
     private File root;
+    private File proxyRoot;
     private final String proxySettings;
+    private boolean withProxy;
+    private String proxy;
     private final String type;
     private final String version;
     private final boolean isViaBackwards;
@@ -46,10 +49,10 @@ public class Downloader extends Thread {
     public void run() {
         List<CompletableFuture<Void>> downloads = new ArrayList<>();
 
-        boolean withProxy = !proxySettings.equalsIgnoreCase("None");
+        withProxy = !proxySettings.equalsIgnoreCase("None");
         if (withProxy) {
             File defaultRoot = root;
-            root = new File(root.getAbsolutePath() + "/Paper-Server");
+            //root = new File(root.getAbsolutePath() + "/Paper-Server");
             downloads.add(CompletableFuture.runAsync(() -> {
                 try {
                     downloadPaperServer();
@@ -66,7 +69,8 @@ public class Downloader extends Thread {
             }));
 
             if (proxySettings.contains("Bungee")) {
-                root = new File(defaultRoot.getAbsolutePath() + "/Bungee-Server");
+                proxy = "bungee";
+                //proxyRoot = new File(defaultRoot.getAbsolutePath() + "/Bungee-Server");
                 downloads.add(CompletableFuture.runAsync(() -> {
                     try {
                         downloadBungee();
@@ -75,7 +79,8 @@ public class Downloader extends Thread {
                     }
                 }));
             } else if (proxySettings.contains("Velocity")) {
-                root = new File(defaultRoot.getAbsolutePath() + "/Velocity-Server");
+                proxy = "velocity";
+                //proxyRoot = new File(defaultRoot.getAbsolutePath() + "/Velocity-Server");
 
                 downloads.add(CompletableFuture.runAsync(() -> {
                     try {
@@ -85,7 +90,8 @@ public class Downloader extends Thread {
                     }
                 }));
             } else {
-                root = new File(defaultRoot.getAbsolutePath() + "/Waterfall-Server");
+                proxy = "waterfall";
+                //proxyRoot = new File(defaultRoot.getAbsolutePath() + "/Waterfall-Server");
                 downloads.add(CompletableFuture.runAsync(() -> {
                     try {
                         downloadWaterfallServer();
@@ -95,9 +101,9 @@ public class Downloader extends Thread {
                 }));
             }
 
-            if (!proxySettings.contains("with Via")) {
+          /*  if (!proxySettings.contains("with Via")) {
                 root = new File(defaultRoot.getAbsolutePath() + "/Paper-Server");
-            }
+            }*/
 
             downloads.add(CompletableFuture.runAsync(() -> {
                 try {
@@ -158,35 +164,35 @@ public class Downloader extends Thread {
     }
 
     private void downloadPaperServer() throws IOException {
-        downloadFile(DownloadUtil.getDownloadURL("paper", version), "/paper-" + version + ".jar");
+        downloadFile(DownloadUtil.getDownloadURL("paper", version), getBase("paper") + "/paper-" + version + ".jar");
     }
 
     private void downloadMojangServer() throws IOException {
-        downloadFile(mUrl, "/cache/mojang_" + version + ".jar");
+        downloadFile(mUrl, getBase("paper") + "/cache/mojang_" + version + ".jar");
     }
 
     private void downloadWaterfallServer() throws IOException {
-        downloadFile(DownloadUtil.getDownloadURL("waterfall", DownloadUtil.getLatestProxyMCVersion("waterfall")), "/waterfall-latest.jar");
+        downloadFile(DownloadUtil.getDownloadURL("waterfall", DownloadUtil.getLatestProxyMCVersion("waterfall")), getBase("waterfall") + "/waterfall-latest.jar");
     }
 
     private void downloadVelocityServer() throws IOException {
-        downloadFile(DownloadUtil.getDownloadURL("velocity", DownloadUtil.getLatestProxyMCVersion("velocity")), "/velocity-latest.jar");
+        downloadFile(DownloadUtil.getDownloadURL("velocity", DownloadUtil.getLatestProxyMCVersion("velocity")), getBase("velocity") + "/velocity-latest.jar");
     }
 
     private void downloadBungee() throws IOException {
-        downloadFile(new URL("https://ci.md-5.net/job/BungeeCord/lastSuccessfulBuild/artifact/bootstrap/target/BungeeCord.jar"), "/bungee-latest.jar");
+        downloadFile(new URL("https://ci.md-5.net/job/BungeeCord/lastSuccessfulBuild/artifact/bootstrap/target/BungeeCord.jar"), getBase("bungee") + "/bungee-latest.jar");
     }
 
     private void downloadVia() throws IOException {
         if (type.equalsIgnoreCase("Release")) {
-            downloadFile(new URL(DownloadUtil.getLatestViaFromHangar("ViaVersion")), "/plugins/ViaVersion-release.jar");
+            downloadFile(new URL(DownloadUtil.getLatestViaFromHangar("ViaVersion")), getBase("plugin") + "/ViaVersion-release.jar");
             if (isViaBackwards) {
-                downloadFile(new URL(DownloadUtil.getLatestViaFromHangar("ViaBackwards")), "/plugins/ViaBackwards-release.jar");
+                downloadFile(new URL(DownloadUtil.getLatestViaFromHangar("ViaBackwards")), getBase("plugin") + "/ViaBackwards-release.jar");
             }
             if (isViaRewind) {
-                downloadFile(new URL(DownloadUtil.getLatestViaFromHangar("ViaRewind")), "/plugins/ViaRewind-release.jar");
+                downloadFile(new URL(DownloadUtil.getLatestViaFromHangar("ViaRewind")), getBase("plugin") + "/ViaRewind-release.jar");
                 if (isViaRewindLegacySupport) {
-                    downloadFile(new URL(DownloadUtil.getLatestViaFromHangar("ViaRewindLegacySupport")), "/plugins/ViaRewindLegacySupport-release.jar");
+                    downloadFile(new URL(DownloadUtil.getLatestViaFromHangar("ViaRewindLegacySupport")), getBase("plugin") + "/ViaRewindLegacySupport-release.jar");
                 }
             }
         } else {
@@ -205,17 +211,41 @@ public class Downloader extends Thread {
 
     private void downloadFile(String url) throws IOException {
         String[] urlArray = url.split("/");
-        downloadFile(new URL(url), "/plugins/" + urlArray[urlArray.length - 1]);
+        downloadFile(new URL(url), getBase("plugin") + "/" + urlArray[urlArray.length - 1]);
     }
 
     private void downloadFile(URL url, String fileName) throws IOException {
         //from https://www.baeldung.com/java-download-file
         logger.log(Level.INFO, MessageFormat.format("Starting download of {0}", url));
         ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream());
-        FileOutputStream fileOutputStream = new FileOutputStream(root + fileName);
+        FileOutputStream fileOutputStream = new FileOutputStream(fileName);
         fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
         readableByteChannel.close();
         fileOutputStream.close();
         logger.log(Level.INFO, MessageFormat.format("Finished download of {0}", url));
+    }
+
+    private String getBase(String type) {
+        if (type.equals("paper")) {
+            if (withProxy) {
+                return root.getPath() + "/paper-server";
+            } else {
+                return root.getPath();
+            }
+        }
+
+        if (type.equals("plugin")) {
+            if (withProxy) {
+                return (proxySettings.contains("Via") ? getBase(proxy) : getBase("paper")) + "/plugins";
+            } else {
+                return root.getPath() + "/plugins";//todo fix
+            }
+        }
+
+        if (withProxy) {
+            return root.getPath() + "/" + proxy + "-server";
+        }
+
+        return null;
     }
 }
