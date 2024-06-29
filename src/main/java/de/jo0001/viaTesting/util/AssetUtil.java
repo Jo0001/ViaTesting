@@ -27,9 +27,9 @@ public class AssetUtil {
                 "salmon", "pufferfish", "tropical_fish", "enderman", "piglin", "zombified_piglin", "dolphin", "bee", "wolf",
                 "spider", "cave_spider", "polar_bear", "llama", "iron_golem", "panda", "warden", "allay", "slime", "vex", "stray", "vindicator", "witch", "camel", "sniffer", "bogged", "breeze"};
         Random random = new Random();
-        File dir = new File(System.getProperty("java.io.tmpdir") + "ViaTesting-" + NAMES_1[random.nextInt(NAMES_1.length)] + "-" + NAMES_2[random.nextInt(NAMES_2.length)]);
+        File dir = new File(System.getProperty("java.io.tmpdir/") + "ViaTesting-" + NAMES_1[random.nextInt(NAMES_1.length)] + "-" + NAMES_2[random.nextInt(NAMES_2.length)]);
         if (dir.exists()) {
-            dir = new File(System.getProperty("java.io.tmpdir") + "ViaTesting-" + System.currentTimeMillis());
+            dir = new File(System.getProperty("java.io.tmpdir/") + "ViaTesting-" + System.currentTimeMillis());
         }
         return dir;
     }
