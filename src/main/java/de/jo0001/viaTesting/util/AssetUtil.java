@@ -39,7 +39,7 @@ public class AssetUtil {
     }
 
     public static void loadServerAssets(String asset, boolean nether, boolean end, File dir) {
-        String[] paperBase = {"config/paper-global.yml", "eula.txt", "server.properties", "server-icon.png"};
+        String[] paperBase = {"bukkit.yml", "eula.txt", "paper.yml", "server.properties", "server-icon.png"};
         String[] paperWaterfall = {"spigot.yml"};
         String[] waterfall = {"config.yml", "server-icon.png"};
         String[] velocity = {"forwarding.secret", "server-icon.png", "velocity.toml"};
@@ -118,7 +118,7 @@ public class AssetUtil {
      */
     public static void createStartBat(String name, String java, File dir) throws IOException {
         FileOutputStream fos = new FileOutputStream(new File(dir, "start.bat"));
-        String start = "@echo off\ntitle " + dir.getName() + "\necho Starting ViaTesting server\n " + getJava(java) + " -jar " + name + ".jar nogui\npause";
+        String start = "@echo off\ntitle " + dir.getName() + "\necho Starting ViaTesting server\n" + getJava(java) + " -jar " + name + ".jar nogui\npause";
         fos.write(start.getBytes(StandardCharsets.UTF_8));
         fos.close();
     }

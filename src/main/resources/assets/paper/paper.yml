@@ -1,0 +1,3 @@
+# Disables timings as it's unnecessary.
+timings:
+  enabled: false
