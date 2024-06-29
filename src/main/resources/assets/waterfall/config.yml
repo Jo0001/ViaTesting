@@ -1,51 +1,27 @@
-prevent_proxy_connections: false
+# Backend servers that Bungee should prioritize,
+# Also controls the default IP, Port, MOTD and Max Players.
 listeners:
-- query_port: 25577
-  motd: '&6&lViaTesting&r &9(Proxy)Testserver'
-  tab_list: GLOBAL_PING
-  query_enabled: false
-  proxy_protocol: false
-  forced_hosts:
-    hangar.md-5.net: lobby
-  ping_passthrough: false
+- query_port: 25565
+  host: 0.0.0.0:25565
+  motd: '&6&lViaTesting&r &9Testserver (Proxy)'
+  max_players: 20
   priorities:
   - lobby
+  forced_hosts:
+    lobby.example.com: lobby
   bind_local_address: true
-  host: 0.0.0.0:25565
-  max_players: 1
-  tab_size: 60
   force_default_server: false
-remote_ping_cache: -1
-network_compression_threshold: 256
-permissions:
-  default:
-  - bungeecord.command.server
-  - bungeecord.command.list
-  - bungeecord.command.end
-  admin:
-  - bungeecord.command.alert
-  - bungeecord.command.end
-  - bungeecord.command.ip
-  - bungeecord.command.reload
-log_pings: true
-connection_throttle_limit: 3
-server_connect_timeout: 5000
-timeout: 30000
-player_limit: -1
-ip_forward: true
-groups:
-  md_5:
-  - admin
-remote_ping_timeout: 5000
-connection_throttle: 4000
-log_commands: false
-stats: 12a22a6c-3a1a-4136-802b-44358c2c3410
-online_mode: true
-forge_support: true
-disabled_commands:
-- disabledcommandhere
+  query_enabled: false
+
+# Backend servers that Bungee should pick up.
 servers:
   lobby:
-    motd: '&1Just another Waterfall - Forced Host'
+    motd: '&6&lViaTesting&r &9Testserver (Backend)'
     address: localhost:25566
     restricted: false
+
+# Connectivity configuration.
+enforce_secure_profile: false
+ip_forward: true
+online_mode: true
+prevent_proxy_connections: false

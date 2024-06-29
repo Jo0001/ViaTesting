@@ -79,7 +79,7 @@ public class Controller implements Initializable {
         ObservableList items = javaCB.getItems();
         String value = "System (" + System.getProperty("java.version") + ")";
         items.add(0, value);
-        int[] javaVersions = {8, 11, 16, 17, 19, 20, 21, 22};
+        int[] javaVersions = {8, 11, 17, 21, 22};
         for (int javaVersion : javaVersions) {
             if (new File("java-" + javaVersion).exists()) {
                 items.add("Java " + javaVersion);
@@ -221,7 +221,7 @@ public class Controller implements Initializable {
                 }
             }
 
-            if (!isProxy) {//don't set version or check for VRLS on proxies
+            if (!isProxy) { //don't set version or check for VRLS on proxies
                 String version = Util.idToVersion(versionInfo.get("serverProtocol").getAsInt());
                 if (!version.equalsIgnoreCase("Unknown")) {
                     versionCB.setValue(version);

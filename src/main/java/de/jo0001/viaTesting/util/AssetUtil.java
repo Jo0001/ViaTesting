@@ -39,10 +39,10 @@ public class AssetUtil {
     }
 
     public static void loadServerAssets(String asset, boolean nether, boolean end, File dir) {
-        String[] paperBase = {"bukkit.yml", "commands.yml", "eula.txt", "server.properties", "server-icon.png"};
+        String[] paperBase = {"config/paper-global.yml", "eula.txt", "server.properties", "server-icon.png"};
         String[] paperWaterfall = {"spigot.yml"};
-        String[] waterfall = {"config.yml", "server-icon.png", "waterfall.yml"};
-        String[] velocity = {"server-icon.png", "velocity.toml", "forwarding.secret"};
+        String[] waterfall = {"config.yml", "server-icon.png"};
+        String[] velocity = {"forwarding.secret", "server-icon.png", "velocity.toml"};
 
         if (asset.startsWith("paper")) {
             copyFiles(paperBase, "paper", dir);

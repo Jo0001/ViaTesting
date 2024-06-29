@@ -1,0 +1,6 @@
+# Do not change this unless required.
+_version: 29
+
+# Disables timings as it's unnecessary.
+timings:
+  enabled: false
