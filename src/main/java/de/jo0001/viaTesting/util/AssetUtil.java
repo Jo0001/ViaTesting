@@ -27,9 +27,9 @@ public class AssetUtil {
                 "salmon", "pufferfish", "tropical_fish", "enderman", "piglin", "zombified_piglin", "dolphin", "bee", "wolf",
                 "spider", "cave_spider", "polar_bear", "llama", "iron_golem", "panda", "warden", "allay", "slime", "vex", "stray", "vindicator", "witch", "camel", "sniffer", "bogged", "breeze"};
         Random random = new Random();
-        File dir = new File(System.getProperty("java.io.tmpdir") + "ViaTesting-" + NAMES_1[random.nextInt(NAMES_1.length)] + "-" + NAMES_2[random.nextInt(NAMES_2.length)]);
+        File dir = new File(System.getProperty("java.io.tmpdir/") + "ViaTesting-" + NAMES_1[random.nextInt(NAMES_1.length)] + "-" + NAMES_2[random.nextInt(NAMES_2.length)]);
         if (dir.exists()) {
-            dir = new File(System.getProperty("java.io.tmpdir") + "ViaTesting-" + System.currentTimeMillis());
+            dir = new File(System.getProperty("java.io.tmpdir/") + "ViaTesting-" + System.currentTimeMillis());
         }
         return dir;
     }
@@ -39,10 +39,10 @@ public class AssetUtil {
     }
 
     public static void loadServerAssets(String asset, boolean nether, boolean end, File dir) {
-        String[] paperBase = {"bukkit.yml", "commands.yml", "eula.txt", "server.properties", "server-icon.png"};
+        String[] paperBase = {"bukkit.yml", "eula.txt", "paper.yml", "server.properties", "server-icon.png"};
         String[] paperWaterfall = {"spigot.yml"};
-        String[] waterfall = {"config.yml", "server-icon.png", "waterfall.yml"};
-        String[] velocity = {"server-icon.png", "velocity.toml", "forwarding.secret"};
+        String[] waterfall = {"config.yml", "server-icon.png"};
+        String[] velocity = {"forwarding.secret", "server-icon.png", "velocity.toml"};
 
         if (asset.startsWith("paper")) {
             copyFiles(paperBase, "paper", dir);
@@ -118,7 +118,7 @@ public class AssetUtil {
      */
     public static void createStartBat(String name, String java, File dir) throws IOException {
         FileOutputStream fos = new FileOutputStream(new File(dir, "start.bat"));
-        String start = "@echo off\ntitle " + dir.getName() + "\necho Starting ViaTesting server\n " + getJava(java) + " -jar " + name + ".jar nogui\npause";
+        String start = "@echo off\ntitle " + dir.getName() + "\necho Starting ViaTesting server\n" + getJava(java) + " -jar " + name + ".jar nogui\npause";
         fos.write(start.getBytes(StandardCharsets.UTF_8));
         fos.close();
     }
