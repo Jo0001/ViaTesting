@@ -161,7 +161,7 @@ public class Controller implements Initializable {
 
             //load the default server assets
             String serverAssets = withProxy ? "paperProxy" : "paper";
-            File pluginsDir, cacheDir;
+            File pluginsDir, cacheDir, viaDir = null;
             if (withProxy) {
                 File splitDir = new File(dir.getAbsolutePath() + "/Paper-Server");
                 splitDir.mkdir();
@@ -173,6 +173,8 @@ public class Controller implements Initializable {
                 splitDir = proxySettings.contains("Bungee") ? new File(dir.getAbsolutePath() + "/Bungee-Server") : proxySettings.contains("Velocity") ? new File(dir.getAbsolutePath() + "/Velocity-Server") : new File(dir.getAbsolutePath() + "/Waterfall-Server");
                 splitDir.mkdir();
                 pluginsDir = new File(splitDir.getPath() + "/plugins");
+                viaDir = new File(pluginsDir + "/ViaVersion");
+
                 if (proxySettings.contains("Velocity")) {
                     AssetUtil.loadServerAssets("velocity", splitDir);
                 } else {
@@ -187,6 +189,10 @@ public class Controller implements Initializable {
             }
             pluginsDir.mkdir();
             cacheDir.mkdir();
+
+            if (proxySettings.equalsIgnoreCase("Bungee with Via") || proxySettings.equalsIgnoreCase("Waterfall with Via")) {
+                viaDir.mkdir();
+            }
 
             Downloader downloader = new Downloader(this, dir, proxySettings, type, version, vB.isSelected(), vR.isSelected(), vRSup.isSelected(), new URL(mojangjars.get(version)));
             downloader.start();

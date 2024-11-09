@@ -196,6 +196,9 @@ public class Downloader extends Thread {
                 }
             }
         }
+        if (proxySettings.equalsIgnoreCase("Bungee with Via") || proxySettings.equalsIgnoreCase("Waterfall with Via")) {
+            downloadFile(new URL(DownloadUtil.getLatestViaFromHangar("ViaBungee", "WATERFALL")), getBase("loader") + "/ViaBungee-release.jar");
+        }
     }
 
     private void downloadFile(String url) throws IOException {
@@ -224,10 +227,22 @@ public class Downloader extends Thread {
         }
         if (type.equals("plugin")) {
             if (withProxy) {
-                return (proxySettings.contains("Via") ? getBase(proxy) : getBase("paper")) + "/plugins";
+                if (proxySettings.contains("Via")) {
+                    if (proxySettings.contains("Bungee") || proxySettings.contains("Waterfall")) {
+                        return getBase(proxy) + "/plugins/ViaVersion";
+                    } else {
+                        return getBase(proxy) + "/plugins";
+                    }
+                } else {
+                    return getBase("paper") + "/plugins";
+                }
+                //return (proxySettings.contains("Via") ? getBase(proxy) : getBase("paper")) + "/plugins";
             } else {
                 return root.getPath() + "/plugins";
             }
+        }
+        if (type.equals("loader")) {
+            return getBase(proxy) + "/plugins";
         }
         if (withProxy) {
             return root.getPath() + "/" + proxy + "-server";

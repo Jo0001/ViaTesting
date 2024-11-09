@@ -29,14 +29,18 @@ public class DownloadUtil {
     public static String getLatestViaFileUrl(String project, String type) throws IOException {
         if (type.equalsIgnoreCase("dev") && !project.equalsIgnoreCase("ViaRewind%20Legacy%20Support")) {
             project = project + "-DEV";
-        }else if (type.equalsIgnoreCase("Downgraded") && !project.equalsIgnoreCase("ViaRewind%20Legacy%20Support")) {
+        } else if (type.equalsIgnoreCase("Downgraded") && !project.equalsIgnoreCase("ViaRewind%20Legacy%20Support")) {
             project = project + "-Java8";
         }
         return "https://ci.viaversion.com/job/" + project + "/lastSuccessfulBuild/artifact/" + fetchData("https://ci.viaversion.com/job/" + project + "/lastSuccessfulBuild/api/json?tree=artifacts[relativePath]").getAsJsonArray("artifacts").get(0).getAsJsonObject().get("relativePath").getAsString();
     }
 
     public static String getLatestViaFromHangar(String project) throws IOException {
-        JsonObject data = fetchData("https://hangar.papermc.io/api/v1/projects/" + project + "/versions?channel=Release&limit=1&offset=0&platform=paper").getAsJsonArray("result").get(0).getAsJsonObject().getAsJsonObject("downloads").getAsJsonObject("PAPER");
+        return getLatestViaFromHangar(project, "PAPER");
+    }
+
+    public static String getLatestViaFromHangar(String project, String platform) throws IOException {
+        JsonObject data = fetchData("https://hangar.papermc.io/api/v1/projects/" + project + "/versions?channel=Release&limit=1&offset=0&platform=" + platform).getAsJsonArray("result").get(0).getAsJsonObject().getAsJsonObject("downloads").getAsJsonObject(platform);
         return data.get("fileInfo").isJsonNull() ? data.get("externalUrl").getAsString() : data.get("downloadUrl").getAsString();
     }
 
