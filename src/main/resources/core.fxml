@@ -45,6 +45,7 @@
                         <String fx:value="Release"/>
                         <String fx:value="#links"/>
                         <String fx:value="dev"/>
+                        <String fx:value="Downgraded"/>
                     </FXCollections>
                 </items>
             </ChoiceBox>

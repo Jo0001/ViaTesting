@@ -29,6 +29,8 @@ public class DownloadUtil {
     public static String getLatestViaFileUrl(String project, String type) throws IOException {
         if (type.equalsIgnoreCase("dev") && !project.equalsIgnoreCase("ViaRewind%20Legacy%20Support")) {
             project = project + "-DEV";
+        }else if (type.equalsIgnoreCase("Downgraded") && !project.equalsIgnoreCase("ViaRewind%20Legacy%20Support")) {
+            project = project + "-Java8";
         }
         return "https://ci.viaversion.com/job/" + project + "/lastSuccessfulBuild/artifact/" + fetchData("https://ci.viaversion.com/job/" + project + "/lastSuccessfulBuild/api/json?tree=artifacts[relativePath]").getAsJsonArray("artifacts").get(0).getAsJsonObject().get("relativePath").getAsString();
     }
