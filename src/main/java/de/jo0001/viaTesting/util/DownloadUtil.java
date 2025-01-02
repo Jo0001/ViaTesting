@@ -12,17 +12,17 @@ import java.net.URL;
 public class DownloadUtil {
     public static URL getDownloadURL(String type, String version) throws IOException {
         int build = getLatestBuild(type, version);
-        return new URL("https://papermc.io/api/v2/projects/" + type + "/versions/" + version + "/builds/" + build + "/downloads/" + type + "-" + version + "-" + build + ".jar");
+        return new URL("https://api.papermc.io/v2/projects/" + type + "/versions/" + version + "/builds/" + build + "/downloads/" + type + "-" + version + "-" + build + ".jar");
     }
 
     private static int getLatestBuild(String type, String version) throws IOException {
-        String url = "https://papermc.io/api/v2/projects/" + type + "/versions/" + version;
+        String url = "https://api.papermc.io/v2/projects/" + type + "/versions/" + version;
         JsonArray builds = fetchData(url).getAsJsonArray("builds");
         return builds.get(builds.size() - 1).getAsInt();
     }
 
     public static String getLatestProxyMCVersion(String proxy) throws IOException {
-        JsonArray versions = fetchData("https://papermc.io/api/v2/projects/" + proxy).getAsJsonArray("versions");
+        JsonArray versions = fetchData("https://api.papermc.io/v2/projects/" + proxy).getAsJsonArray("versions");
         return versions.get(versions.size() - 1).getAsString();
     }
 
@@ -45,7 +45,7 @@ public class DownloadUtil {
     }
 
     public static JsonArray getVersions() throws IOException {
-        return fetchData("https://papermc.io/api/v2/projects/paper").getAsJsonArray("versions");
+        return fetchData("https://api.papermc.io/v2/projects/paper").getAsJsonArray("versions");
     }
 
     public static JsonObject getLatestViaTesting() throws IOException {
