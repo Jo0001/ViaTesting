@@ -11,19 +11,13 @@ import java.net.URL;
 
 public class DownloadUtil {
     public static URL getDownloadURL(String type, String version) throws IOException {
-        int build = getLatestBuild(type, version);
-        return new URL("https://api.papermc.io/v2/projects/" + type + "/versions/" + version + "/builds/" + build + "/downloads/" + type + "-" + version + "-" + build + ".jar");
-    }
-
-    private static int getLatestBuild(String type, String version) throws IOException {
-        String url = "https://api.papermc.io/v2/projects/" + type + "/versions/" + version;
-        JsonArray builds = fetchData(url).getAsJsonArray("builds");
-        return builds.get(builds.size() - 1).getAsInt();
+        String url = "https://fill.papermc.io/v3/projects/" + type + "/versions/" + version + "/builds/latest";
+        return new URL(fetchData(url).getAsJsonObject("downloads").getAsJsonObject("server:default").get("url").getAsString());
     }
 
     public static String getLatestProxyMCVersion(String proxy) throws IOException {
-        JsonArray versions = fetchData("https://api.papermc.io/v2/projects/" + proxy).getAsJsonArray("versions");
-        return versions.get(versions.size() - 1).getAsString();
+        JsonArray versions = fetchData("https://fill.papermc.io/v3/projects/" + proxy).getAsJsonObject("versions").entrySet().iterator().next().getValue().getAsJsonArray();
+        return versions.get(0).getAsString();
     }
 
     public static String getLatestViaFileUrl(String project, String type) throws IOException {
@@ -44,8 +38,8 @@ public class DownloadUtil {
         return data.get("fileInfo").isJsonNull() ? data.get("externalUrl").getAsString() : data.get("downloadUrl").getAsString();
     }
 
-    public static JsonArray getVersions() throws IOException {
-        return fetchData("https://api.papermc.io/v2/projects/paper").getAsJsonArray("versions");
+    public static JsonObject getVersions() throws IOException {
+        return fetchData("https://fill.papermc.io/v3/projects/paper").getAsJsonObject("versions");
     }
 
     public static JsonObject getLatestViaTesting() throws IOException {

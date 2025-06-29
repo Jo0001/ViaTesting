@@ -18,6 +18,8 @@ import java.net.URL;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class Controller implements Initializable {
     @FXML
@@ -50,7 +52,10 @@ public class Controller implements Initializable {
 
         try {
             logger.log(Level.INFO, "Fetching Mojang data");
-            DownloadUtil.getVersions().forEach(e -> mcVersionsPaper.add(e.getAsString()));
+            DownloadUtil.getVersions().entrySet().stream()
+                    .flatMap(e -> StreamSupport.stream(e.getValue().getAsJsonArray().spliterator(), false))
+                    .map(JsonElement::getAsString).collect(Collectors.toCollection(ArrayDeque::new))
+                    .descendingIterator().forEachRemaining(mcVersionsPaper::add);
             JsonObject mojangData = DownloadUtil.getMojangData();
             mojangData.getAsJsonArray("versions").forEach(e -> {
                 JsonObject eo = e.getAsJsonObject();

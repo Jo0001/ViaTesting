@@ -118,7 +118,7 @@ public class AssetUtil {
      */
     public static void createStartBat(String name, String java, File dir) throws IOException {
         FileOutputStream fos = new FileOutputStream(new File(dir, "start.bat"));
-        String start = "@echo off\ntitle " + dir.getName() + "\necho Starting ViaTesting server\n " + getJava(java) + " -jar " + name + ".jar nogui\npause";
+        String start = "@echo off\ntitle " + dir.getName() + "\necho Starting ViaTesting server\n " + getJava(java) + " -jar -DPaper.IgnoreJavaVersion=true " + name + ".jar nogui\npause";
         fos.write(start.getBytes(StandardCharsets.UTF_8));
         fos.close();
     }
