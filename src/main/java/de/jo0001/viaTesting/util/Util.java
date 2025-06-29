@@ -113,6 +113,12 @@ public class Util {
                 return "1.21.3";
             case 769:
                 return "1.21.4";
+            case 770:
+                return "1.21.5";
+            case 771:
+                return "1.21.6";
+            case 772:
+                return "1.21.7";
             default:
                 return "Unknown";
         }
