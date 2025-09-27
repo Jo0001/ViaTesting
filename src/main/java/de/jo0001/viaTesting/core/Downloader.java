@@ -109,13 +109,15 @@ public class Downloader extends Thread {
                     throw new RuntimeException(e);
                 }
             }));
-            downloads.add(CompletableFuture.runAsync(() -> {
-                try {
-                    downloadMojangServer();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }));
+            if (mUrl != null) {
+                downloads.add(CompletableFuture.runAsync(() -> {
+                    try {
+                        downloadMojangServer();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }));
+            }
             downloads.add(CompletableFuture.runAsync(() -> {
                 try {
                     downloadVia();

@@ -60,7 +60,7 @@ public class Controller implements Initializable {
             mojangData.getAsJsonArray("versions").forEach(e -> {
                 JsonObject eo = e.getAsJsonObject();
                 String id = eo.get("id").getAsString();
-                if (eo.get("type").getAsString().equals("release") && mcVersionsPaper.contains(id)) {
+                if ((eo.get("type").getAsString().equals("release") || eo.get("type").getAsString().equals("snapshot") )&& mcVersionsPaper.contains(id)) {
                     try {
                         mojangjars.put(id, DownloadUtil.getMojangJarUrl(eo.get("url").getAsString()));
                     } catch (IOException ex) {
@@ -198,8 +198,8 @@ public class Controller implements Initializable {
             if (proxySettings.equalsIgnoreCase("Bungee with Via") || proxySettings.equalsIgnoreCase("Waterfall with Via")) {
                 viaDir.mkdir();
             }
-
-            Downloader downloader = new Downloader(this, dir, proxySettings, type, version, vB.isSelected(), vR.isSelected(), vRSup.isSelected(), new URL(mojangjars.get(version)));
+            URL mojangUrl = mojangjars.get(version) != null ? new URL(mojangjars.get(version)) : null;//just in case paper might be ahead with snap/pre/rc versions
+            Downloader downloader = new Downloader(this, dir, proxySettings, type, version, vB.isSelected(), vR.isSelected(), vRSup.isSelected(), mojangUrl);
             downloader.start();
         } else {
             Util.alert(MAX_CONCURRENT_SETUPS + " is a nice number", "Please wait. There are already " + MAX_CONCURRENT_SETUPS + " testing setups in work", Alert.AlertType.INFORMATION);
