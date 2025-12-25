@@ -54,13 +54,13 @@ public class Controller implements Initializable {
             logger.log(Level.INFO, "Fetching Mojang data");
             DownloadUtil.getVersions().entrySet().stream()
                     .flatMap(e -> StreamSupport.stream(e.getValue().getAsJsonArray().spliterator(), false))
-                    .map(JsonElement::getAsString).collect(Collectors.toCollection(ArrayDeque::new))
+                    .map(JsonElement::getAsString).filter(e -> !e.contains("-")).collect(Collectors.toCollection(ArrayDeque::new))
                     .descendingIterator().forEachRemaining(mcVersionsPaper::add);
             JsonObject mojangData = DownloadUtil.getMojangData();
             mojangData.getAsJsonArray("versions").forEach(e -> {
                 JsonObject eo = e.getAsJsonObject();
                 String id = eo.get("id").getAsString();
-                if ((eo.get("type").getAsString().equals("release") || eo.get("type").getAsString().equals("snapshot") )&& mcVersionsPaper.contains(id)) {
+                if ((eo.get("type").getAsString().equals("release") || eo.get("type").getAsString().equals("snapshot")) && mcVersionsPaper.contains(id)) {
                     try {
                         mojangjars.put(id, DownloadUtil.getMojangJarUrl(eo.get("url").getAsString()));
                     } catch (IOException ex) {
@@ -84,7 +84,7 @@ public class Controller implements Initializable {
         ObservableList items = javaCB.getItems();
         String value = "System (" + System.getProperty("java.version") + ")";
         items.add(0, value);
-        int[] javaVersions = {8, 11, 16, 17, 19, 20, 21, 22};
+        int[] javaVersions = {8, 11, 16, 17, 19, 20, 21, 22, 25};
         for (int javaVersion : javaVersions) {
             if (new File("java-" + javaVersion).exists()) {
                 items.add("Java " + javaVersion);
